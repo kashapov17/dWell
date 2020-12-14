@@ -10,6 +10,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+
     connect(ui->actionAbout_Qt, &QAction::triggered, [this] {about_qt();});
     connect(ui->actionAbout_dWell, &QAction::triggered, [this] {about_dwell();});
     connect(ui->actionAutors, &QAction::triggered, [this] {about_autors();});
