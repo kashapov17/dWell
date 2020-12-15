@@ -23,7 +23,7 @@ void ubook::insert(user &user)
     saveToFile(config::fileUsers);
 }
 
-void ubook::save(QDataStream &ost)
+void ubook::save(QDataStream &ost) const
 {
     // Цикл по всем заметкам
     for (const auto &u : mUsers)
@@ -38,7 +38,7 @@ void ubook::save(QDataStream &ost)
     }
 }
 
-void ubook::saveToFile(const QString &filename)
+void ubook::saveToFile(const QString &filename) const
 {
     QFile ubookfile(filename);
     ubookfile.open(QIODevice::WriteOnly);

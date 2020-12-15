@@ -6,6 +6,7 @@
 
 class user
 {
+
 public:
     enum utype {ADMIN, STUDENT, COMMANDANT, UNKNOWN};
     user();
