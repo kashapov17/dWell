@@ -29,11 +29,11 @@
    </column>
    <column>
     <property name="text">
-     <string>New Column</string>
+     <string>Тип</string>
     </property>
    </column>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="addButton">
    <property name="geometry">
     <rect>
      <x>30</x>

@@ -5,6 +5,7 @@
 #include <QCryptographicHash>
 #include <QMessageBox>
 #include <QFile>
+#include <QLineEdit>
 
 #include "config.h"
 #include "user.h"
@@ -13,6 +14,7 @@
 #include "commandantdialog.h"
 #include "studentdialog.h"
 #include "initsetupdialog.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -29,7 +31,6 @@ MainWindow::MainWindow(QWidget *parent)
         QMessageBox::warning(this, "Система не инсталлирована", "Будет открыто окно начальной настройки.", QMessageBox::Ok);
         initSetupDialog *initDlg = new initSetupDialog(this);
         initDlg->setWindowTitle("Мастер начальной настройки");
-        initDlg->setModal(true);
         initDlg->exec();
     }
     usersbook.loadFromFile(config::fileUsers);
@@ -77,15 +78,15 @@ void MainWindow::about_dwell()
 void MainWindow::on_loginButton_clicked()
 {
 
-    const QString login = ui->usernameEdit->toPlainText();
-    const QString password = ui->passwdEdit->toPlainText();
+    const QString login = ui->usernameEdit->text();
+    const QString password = ui->passwdEdit->text();
     auto interfaceType = usersbook.checkUser(login.trimmed(), password.trimmed());
 
     switch (interfaceType)
     {
         case user::utype::ADMIN:
         {
-            adminDialog *adminDlg = new adminDialog(this);
+            adminDialog *adminDlg = new adminDialog(this, reinterpret_cast<ubook*>(&usersbook));
             adminDlg->setWindowTitle("Панель администрирования");
             adminDlg->exec();
         }

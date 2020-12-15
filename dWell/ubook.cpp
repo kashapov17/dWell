@@ -4,7 +4,7 @@
 
 ubook::ubook()
 {
-    //QObject::connect(this, &ubook::dataChanged, [this] { saveToFile(config::fileUsers);});
+
 }
 
 user::utype ubook::checkUser(const QString &name, const QString &passwd)
