@@ -29,8 +29,11 @@ MainWindow::MainWindow(QWidget *parent)
         QMessageBox::warning(this, "Система не инсталлирована", "Будет открыто окно начальной настройки.", QMessageBox::Ok);
         initSetupDialog *initDlg = new initSetupDialog(this);
         initDlg->setWindowTitle("Мастер начальной настройки");
-        initDlg->show();
+        initDlg->setModal(true);
+        initDlg->exec();
     }
+    usersbook.loadFromFile(config::fileUsers);
+
 }
 
 MainWindow::~MainWindow()
@@ -80,14 +83,14 @@ void MainWindow::on_loginButton_clicked()
 
     switch (interfaceType)
     {
-        case user::utype::COMMANDANT:
+        case user::utype::ADMIN:
         {
-            adminDialog adminDlg(this);
-            adminDlg.setWindowTitle("Панель администрирования");
-            adminDlg.show();
+            adminDialog *adminDlg = new adminDialog(this);
+            adminDlg->setWindowTitle("Панель администрирования");
+            adminDlg->exec();
         }
             break;
-        case user::utype::ADMIN:
+        case user::utype::COMMANDANT:
             commandantDialog(this).show();
             break;
         case user::utype::STUDENT:

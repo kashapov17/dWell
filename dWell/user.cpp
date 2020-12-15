@@ -39,3 +39,10 @@ void user::setType(utype &type)
 {
     m_type = type;
 }
+
+void user::setData(QString &name, QString &passwd, utype &type)
+{
+    setName(name);
+    setPasswd(passwd);
+    setType(type);
+}

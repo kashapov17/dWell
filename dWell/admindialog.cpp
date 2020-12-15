@@ -12,3 +12,13 @@ adminDialog::~adminDialog()
 {
     delete ui;
 }
+
+void adminDialog::on_addButton_clicked()
+{
+
+}
+
+void adminDialog::on_pushButton_2_clicked()
+{
+
+}

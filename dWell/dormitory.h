@@ -3,12 +3,11 @@
 
 #include <cstdint>
 #include <QString>
-#include <QObject>
 #include <QDataStream>
 
 class dormitory
-{    
-    Q_OBJECT
+{
+
 public:
     dormitory();
     dormitory(QString &, uint8_t &);
@@ -16,12 +15,12 @@ public:
     uint8_t slotsNumber();
     void load(QDataStream &);
     void save(QDataStream &);
-    void loadFromFile(QString &filename);
+    void loadFromFile(const QString &filename);
 
 private:
     uint8_t slotsNum;
     QString dormName;
-    void saveToFile(QString &filename);
+    void saveToFile(const QString &filename);
 };
 
 #endif // DORMITORY_H

@@ -4,7 +4,7 @@
 
 ubook::ubook()
 {
-    QObject::connect(this, &ubook::dataChanged, [this] { saveToFile(config::fileUsers);});
+    //QObject::connect(this, &ubook::dataChanged, [this] { saveToFile(config::fileUsers);});
 }
 
 user::utype ubook::checkUser(const QString &name, const QString &passwd)
@@ -20,7 +20,7 @@ user::utype ubook::checkUser(const QString &name, const QString &passwd)
 void ubook::insert(user &user)
 {
     mUsers.push_back(user);
-    emit dataChanged();
+    saveToFile(config::fileUsers);
 }
 
 void ubook::save(QDataStream &ost)

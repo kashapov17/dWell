@@ -20,7 +20,7 @@ private:
 
 public slots:
     /// Обрабатывает подтверждение диалога.
-    void accept() Q_DECL_OVERRIDE;
+    void accept();
 };
 
 #endif // INITSETUPDIALOG_H

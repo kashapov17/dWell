@@ -7,7 +7,7 @@
 
 #include "user.h"
 
-class ubook
+class ubook : QObject
 {
     Q_OBJECT
 public:

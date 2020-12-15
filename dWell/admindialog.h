@@ -15,6 +15,11 @@ public:
     explicit adminDialog(QWidget *parent = nullptr);
     ~adminDialog();
 
+private slots:
+    void on_addButton_clicked();
+
+    void on_pushButton_2_clicked();
+
 private:
     Ui::adminDialog *ui;
 };

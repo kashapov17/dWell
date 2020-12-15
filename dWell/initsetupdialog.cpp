@@ -23,10 +23,9 @@ void initSetupDialog::accept()
     uint8_t roomSlots = uint8_t(ui->comboBox->currentText().toInt());
     QString adminName = ui->admiLogin->text();
     QString adminPasswd = ui->adminPasswd->text();
-
     user admin = user(adminName, adminPasswd, user::utype::ADMIN);
     ubook usersbook;
     usersbook.insert(admin);
-
     dormitory dorm = dormitory(dormName, roomSlots);
+    QDialog::accept();
 }
