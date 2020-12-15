@@ -3,39 +3,39 @@
 user::user()
 {}
 
-user::user(QString name, QByteArray pHash, utype type)
+user::user(QString name, QString passwd, utype type)
 {
-    name = this->name;
-    passwdHash = pHash;
-    type = this->type;
+    m_name = name;;
+    m_passwd = passwd;
+    m_type = type;
 }
 
-const QString user::getName() const
+const QString user::name() const
 {
-    return name;
+    return m_name;
 }
 
-const QByteArray user::getPasswd() const
+const QString user::passwd() const
 {
-    return passwdHash;
+    return m_passwd;
 }
 
-user::utype user::getType() const
+user::utype user::type() const
 {
-    return type;
+    return m_type;
 }
 
 void user::setName(QString &name)
 {
-    name = this->name;
+    m_name = name;
 }
 
-void user::setPasswd(QByteArray &passwdHash)
+void user::setPasswd(QString &passwd)
 {
-    passwdHash = this->passwdHash;
+    m_passwd = passwd;
 }
 
 void user::setType(utype &type)
 {
-    type = this->type;
+    m_type = type;
 }

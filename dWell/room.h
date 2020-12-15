@@ -1,10 +1,19 @@
 #ifndef ROOM_H
 #define ROOM_H
 
-#include "bookentry.h"
+#include <QString>
 
-class room : bookentry
+#include "habitant.h"
+
+class room
 {
+
+private:
+    uint number;
+    uint slotsNumber;
+    uint freeslotsNumber;
+    QVector<habitant> *mHabitants;
+
 public:
     room();
 };

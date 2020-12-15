@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "ubook.h"
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -17,10 +19,12 @@ public:
 
 private:
     Ui::MainWindow *ui;
+    ubook usersbook;
 
 private slots:
     void about_qt();
     void about_dwell();
     void about_autors();
+    void on_loginButton_clicked();
 };
 #endif // MAINWINDOW_H

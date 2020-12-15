@@ -15,6 +15,12 @@ public:
     explicit studentDialog(QWidget *parent = nullptr);
     ~studentDialog();
 
+
+private slots:
+    void on_docqButton_clicked();
+
+    void on_relocqButton_clicked();
+
 private:
     Ui::studentDialog *ui;
 };

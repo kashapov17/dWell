@@ -13,7 +13,13 @@ studentDialog::~studentDialog()
     delete ui;
 }
 
-void studentDialog::on_docqButton_clicked(bool checked)
+
+void studentDialog::on_docqButton_clicked()
+{
+
+}
+
+void studentDialog::on_relocqButton_clicked()
 {
 
 }

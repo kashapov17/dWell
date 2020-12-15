@@ -10,47 +10,44 @@ CONFIG += c++11
 
 SOURCES += \
     admindialog.cpp \
-    book.cpp \
-    bookentry.cpp \
     commandantdialog.cpp \
-    docquery.cpp \
+    dormitory.cpp \
     habitant.cpp \
-    hbook.cpp \
+    habitantadddialog.cpp \
+    initsetupdialog.cpp \
     main.cpp \
     mainwindow.cpp \
-    qbook.cpp \
-    query.cpp \
     rbook.cpp \
-    relocquery.cpp \
     room.cpp \
     studentdialog.cpp \
     ubook.cpp \
-    user.cpp
+    user.cpp \
+    useradddialog.cpp
 
 HEADERS += \
     admindialog.h \
-    book.h \
-    bookentry.h \
     commandantdialog.h \
     config.h \
-    docquery.h \
+    dormitory.h \
     habitant.h \
-    hbook.h \
+    habitantadddialog.h \
+    initsetupdialog.h \
     mainwindow.h \
-    qbook.h \
-    query.h \
     rbook.h \
-    relocquery.h \
     room.h \
     studentdialog.h \
     ubook.h \
-    user.h
+    user.h \
+    useradddialog.h
 
 FORMS += \
     admindialog.ui \
     commandantdialog.ui \
+    habitantadddialog.ui \
+    initsetupdialog.ui \
     mainwindow.ui \
-    studentdialog.ui
+    studentdialog.ui \
+    useradddialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

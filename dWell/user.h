@@ -1,27 +1,45 @@
 #ifndef USER_H
 #define USER_H
 
-#include "bookentry.h"
-
 #include <QString>
+#include <QDataStream>
 
-class user : public bookentry
+class user
 {
 public:
-    enum utype {ADMIN, STUDENT, COMMANDANT};
+    enum utype {ADMIN, STUDENT, COMMANDANT, UNKNOWN};
     user();
-    user(QString, QByteArray, utype);
-    const QString getName() const;
-    const QByteArray getPasswd() const;
-    utype getType() const;
+    user(QString, QString, utype);
+    const QString name() const;
+    const QString passwd() const;
+    utype type() const;
     void setName(QString &);
-    void setPasswd(QByteArray &);
+    void setPasswd(QString &);
     void setType(utype &);
+    void setData(QString &, QString &, utype &);
 
 private:
-    QString name;
-    QByteArray passwdHash;
-    utype type;
+    QString m_name;
+    QString m_passwd;
+    utype m_type;
 };
+
+// Запись пользователя в поток
+inline QDataStream &operator<< (QDataStream &ost, const user &user)
+{
+    ost << user.name() << user.passwd() << user.type();
+    return ost;
+}
+
+// Считывание пользователя из потока
+inline QDataStream &operator>> (QDataStream &ist, user &user)
+{
+    QString name;
+    QString password;
+    user::utype type;
+    ist >> name >> password >> type;
+    user.setData(name, password, type);
+    return ist;
+}
 
 #endif // USER_H

@@ -30,8 +30,8 @@
    <widget class="QTextEdit" name="usernameEdit">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>50</y>
+      <x>140</x>
+      <y>60</y>
       <width>141</width>
       <height>31</height>
      </rect>
@@ -47,8 +47,8 @@ p, li { white-space: pre-wrap; }
    <widget class="QTextEdit" name="passwdEdit">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>90</y>
+      <x>140</x>
+      <y>100</y>
       <width>141</width>
       <height>31</height>
      </rect>
@@ -59,6 +59,32 @@ p, li { white-space: pre-wrap; }
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:'Liberation Sans'; font-size:10pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot;-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;br /&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="login">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>60</y>
+      <width>111</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Имя пользователя</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="password">
+    <property name="geometry">
+     <rect>
+      <x>70</x>
+      <y>110</y>
+      <width>56</width>
+      <height>15</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Пароль</string>
     </property>
    </widget>
   </widget>

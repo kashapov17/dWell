@@ -2,8 +2,17 @@
 #include "ui_mainwindow.h"
 
 #include <QMessageBox>
+#include <QCryptographicHash>
+#include <QMessageBox>
+#include <QFile>
 
 #include "config.h"
+#include "user.h"
+
+#include "admindialog.h"
+#include "commandantdialog.h"
+#include "studentdialog.h"
+#include "initsetupdialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -14,6 +23,14 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->actionAbout_Qt, &QAction::triggered, [this] {about_qt();});
     connect(ui->actionAbout_dWell, &QAction::triggered, [this] {about_dwell();});
     connect(ui->actionAutors, &QAction::triggered, [this] {about_autors();});
+
+    if (!QFile(config::fileUsers).exists())
+    {
+        QMessageBox::warning(this, "Система не инсталлирована", "Будет открыто окно начальной настройки.", QMessageBox::Ok);
+        initSetupDialog *initDlg = new initSetupDialog(this);
+        initDlg->setWindowTitle("Мастер начальной настройки");
+        initDlg->show();
+    }
 }
 
 MainWindow::~MainWindow()
@@ -52,4 +69,36 @@ void MainWindow::about_dwell()
             .arg(config::applicationName).arg(config::applicationVersion)
             .arg(qVersion()));
     aboutDlg.exec();
+}
+
+void MainWindow::on_loginButton_clicked()
+{
+
+    const QString login = ui->usernameEdit->toPlainText();
+    const QString password = ui->passwdEdit->toPlainText();
+    auto interfaceType = usersbook.checkUser(login.trimmed(), password.trimmed());
+
+    switch (interfaceType)
+    {
+        case user::utype::COMMANDANT:
+        {
+            adminDialog adminDlg(this);
+            adminDlg.setWindowTitle("Панель администрирования");
+            adminDlg.show();
+        }
+            break;
+        case user::utype::ADMIN:
+            commandantDialog(this).show();
+            break;
+        case user::utype::STUDENT:
+            studentDialog(this).show();
+            break;
+        default:
+        {
+            QMessageBox::critical(this, "Ошибка", "Неверный пароль или логин", QMessageBox::Ok);
+
+        }
+    }
+    ui->usernameEdit->clear();
+    ui->passwdEdit->clear();
 }
