@@ -1,12 +1,11 @@
 #include "usereditdialog.h"
 #include "ui_usereditdialog.h"
 
-userEditDialog::userEditDialog(QWidget *parent, ubook *ub) :
+userEditDialog::userEditDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::userEditDialog)
 {
     ui->setupUi(this);
-    m_ubook = ub;
 }
 
 userEditDialog::~userEditDialog()
@@ -19,7 +18,19 @@ void userEditDialog::accept()
     QString username = ui->usernameEdit->text();
     QString passwd = ui->passwdEdit->text();
     user::utype type = user::utype(ui->typeBox->currentIndex());
-    user u(username, passwd, type);
-    m_ubook->insert(u);
+    m_user->setData(username, passwd, type);
     QDialog::accept();
+}
+
+void userEditDialog::setUser(user *u)
+{
+    m_user = u;
+}
+
+void userEditDialog::setUserForEdit(user *u)
+{
+    setUser(u);
+    ui->usernameEdit->setText(u->name());
+    ui->passwdEdit->setText(u->passwd());
+    ui->typeBox->setCurrentIndex(u->type());
 }

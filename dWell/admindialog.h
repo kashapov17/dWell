@@ -22,6 +22,8 @@ private slots:
     void on_removeButton_clicked();
     void updateTable();
 
+    void on_tableWidget_doubleClicked(const QModelIndex &index);
+
 private:
     ubook *m_ubook;
     Ui::adminDialog *ui;

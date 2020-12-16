@@ -11,6 +11,15 @@ adminDialog::adminDialog(QWidget *parent, ubook *users) :
     m_ubook = users;
 
     connect(m_ubook, &ubook::dataChanged, this, &adminDialog::updateTable);
+    //ui->removeButton->setDisabled(!ui->tableWidget->selectionModel()
+    //                              ->hasSelection());
+    connect(ui->tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged,
+            [this]
+    {
+        // отключаем кнопку "удалить", если нет выделенных потльзователей
+        ui->removeButton->setDisabled(!ui->tableWidget->selectionModel()
+                                                         ->hasSelection());
+    });
 
     updateTable();
 }
@@ -22,16 +31,35 @@ adminDialog::~adminDialog()
 
 void adminDialog::on_addButton_clicked()
 {
-    userEditDialog userEditDlg(this, m_ubook);
-    userEditDlg.setWindowTitle("Создание пользователя");
-    userEditDlg.exec();
+    userEditDialog userAddtDlg(this);
+    user *u = new user;
+    userAddtDlg.setUser(u);
+    userAddtDlg.setWindowTitle("Создание пользователя");
+    userAddtDlg.exec();
+    if (userAddtDlg.exec() != userEditDialog::Accepted)
+    {
+        return;
+    }
+    m_ubook->insert(*u);
 }
 
 void adminDialog::on_removeButton_clicked()
 {
-
+    m_ubook->erase(ui->tableWidget->currentIndex().row());
 }
 
+void adminDialog::on_tableWidget_doubleClicked(const QModelIndex &index)
+{
+    userEditDialog userEditDlg(this);
+    user *u = const_cast<user *>(&(*m_ubook)[index.row()]);
+    userEditDlg.setUserForEdit(u);
+    userEditDlg.setWindowTitle("Редактирование пользователя");
+    if (userEditDlg.exec() != userEditDialog::Accepted)
+    {
+        return;
+    }
+    emit m_ubook->dataChanged();
+}
 
 void adminDialog::updateTable()
 {
@@ -61,4 +89,5 @@ void adminDialog::updateTable()
     }
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
 }
+
 

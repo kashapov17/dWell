@@ -8,7 +8,7 @@ class user
 {
 
 public:
-    enum utype {ADMIN, STUDENT, COMMANDANT, UNKNOWN};
+    enum utype {ADMIN, COMMANDANT, STUDENT, UNKNOWN};
     user();
     user(QString, QString, utype);
     const QString name() const;

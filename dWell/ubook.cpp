@@ -23,6 +23,12 @@ void ubook::insert(user &user)
     emit dataChanged();
 }
 
+void ubook::erase(const int &idx)
+{
+    mUsers.erase(std::next(mUsers.begin(), idx));
+    emit dataChanged();
+}
+
 void ubook::save(QDataStream &ost) const
 {
     // Цикл по всем заметкам

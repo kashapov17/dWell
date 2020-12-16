@@ -14,11 +14,13 @@ class userEditDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit userEditDialog(QWidget *parent, ubook *ub);
+    explicit userEditDialog(QWidget *parent = nullptr);
     ~userEditDialog();
+    void setUser(user *u);
+    void setUserForEdit(user *u);
 
 private:
-    ubook *m_ubook;
+    user *m_user;
     Ui::userEditDialog *ui;
 
 public slots:

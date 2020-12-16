@@ -22,6 +22,24 @@
      <height>241</height>
     </rect>
    </property>
+   <property name="frameShape">
+    <enum>QFrame::VLine</enum>
+   </property>
+   <property name="editTriggers">
+    <set>QAbstractItemView::NoEditTriggers</set>
+   </property>
+   <property name="selectionMode">
+    <enum>QAbstractItemView::ExtendedSelection</enum>
+   </property>
+   <property name="selectionBehavior">
+    <enum>QAbstractItemView::SelectRows</enum>
+   </property>
+   <property name="textElideMode">
+    <enum>Qt::ElideLeft</enum>
+   </property>
+   <property name="sortingEnabled">
+    <bool>false</bool>
+   </property>
    <column>
     <property name="text">
      <string>Имя</string>
@@ -47,6 +65,9 @@
    </property>
   </widget>
   <widget class="QPushButton" name="removeButton">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="geometry">
     <rect>
      <x>120</x>

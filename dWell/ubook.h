@@ -16,7 +16,7 @@ public:
 
     user::utype checkUser(const QString &name, const QString &passwd);
     void insert(user &user);
-    void erase(int idx);
+    void erase(const int &idx);
     void save(QDataStream &ost) const;
     void load(QDataStream &ist);
     void loadFromFile(const QString &filename);
