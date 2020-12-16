@@ -28,7 +28,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     if (!QFile(config::fileUsers).exists())
     {
-        QMessageBox::warning(this, "Система не инсталлирована", "Будет открыто окно начальной настройки.", QMessageBox::Ok);
+        QMessageBox::warning(this, "Ошибка", "Система не инсталлирована."
+                                             "Будет открыто окно начальной настройки.",
+                             QMessageBox::Ok);
         initSetupDialog *initDlg = new initSetupDialog(this);
         initDlg->setWindowTitle("Мастер начальной настройки");
         initDlg->exec();

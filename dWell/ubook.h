@@ -7,7 +7,7 @@
 
 #include "user.h"
 
-class ubook : QObject
+class ubook : public QObject
 {
     Q_OBJECT
 public:
@@ -23,10 +23,10 @@ public:
     /**
      * @brief Оператор [].
      * @param idx Индекс читаемого элемента.
-     * @return Константная ссылка на заметку.
+     * @return Константная ссылка на пользователя.
      */
     const user &operator[](SizeType idx) const {return mUsers[idx];};
-    /// Определяет размер коллекции (количество заметок).
+    /// Определяет размер коллекции (количество пользователей системы).
     SizeType size() const {return mUsers.size();};
 
 private:

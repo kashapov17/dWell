@@ -19,13 +19,12 @@ public:
 
 private slots:
     void on_addButton_clicked();
-
-    void on_pushButton_2_clicked();
+    void on_removeButton_clicked();
+    void updateTable();
 
 private:
     ubook *m_ubook;
     Ui::adminDialog *ui;
-    void updateTable();
 };
 
 #endif // ADMINDIALOG_H

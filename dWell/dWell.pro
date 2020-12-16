@@ -22,7 +22,7 @@ SOURCES += \
     studentdialog.cpp \
     ubook.cpp \
     user.cpp \
-    useradddialog.cpp
+    usereditdialog.cpp
 
 HEADERS += \
     admindialog.h \
@@ -38,7 +38,7 @@ HEADERS += \
     studentdialog.h \
     ubook.h \
     user.h \
-    useradddialog.h
+    usereditdialog.h
 
 FORMS += \
     admindialog.ui \
@@ -47,7 +47,7 @@ FORMS += \
     initsetupdialog.ui \
     mainwindow.ui \
     studentdialog.ui \
-    useradddialog.ui
+    usereditdialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
