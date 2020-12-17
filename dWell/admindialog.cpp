@@ -3,6 +3,8 @@
 
 #include "usereditdialog.h"
 
+#include <QMessageBox>
+
 adminDialog::adminDialog(QWidget *parent, ubook *users) :
     QDialog(parent),
     ui(new Ui::adminDialog)
@@ -11,16 +13,13 @@ adminDialog::adminDialog(QWidget *parent, ubook *users) :
     m_ubook = users;
 
     connect(m_ubook, &ubook::dataChanged, this, &adminDialog::updateTable);
-    //ui->removeButton->setDisabled(!ui->tableWidget->selectionModel()
-    //                              ->hasSelection());
     connect(ui->tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged,
             [this]
     {
-        // отключаем кнопку "удалить", если нет выделенных потльзователей
+        // отключаем кнопку "удалить", если нет выделенных пользователей
         ui->removeButton->setDisabled(!ui->tableWidget->selectionModel()
                                                          ->hasSelection());
     });
-
     updateTable();
 }
 
@@ -31,7 +30,7 @@ adminDialog::~adminDialog()
 
 void adminDialog::on_addButton_clicked()
 {
-    userEditDialog userAddtDlg(this);
+    userEditDialog userAddtDlg(this, m_ubook);
     user *u = new user;
     userAddtDlg.setUser(u);
     userAddtDlg.setWindowTitle("Создание пользователя");
@@ -45,30 +44,32 @@ void adminDialog::on_addButton_clicked()
 
 void adminDialog::on_removeButton_clicked()
 {
-    m_ubook->erase(ui->tableWidget->currentIndex().row());
+    int idx = ui->tableWidget->currentIndex().row();
+    QMessageBox::StandardButtons ret = QMessageBox::question(this, "Удаление пользователя", QString("Вы действительно хотите "
+                                                                 "удалить пользователя <b><i>%1</i></b>?").arg((*m_ubook)[idx].name()));
+    if (ret == QMessageBox::No) return;
+    m_ubook->erase(idx);
 }
 
 void adminDialog::on_tableWidget_doubleClicked(const QModelIndex &index)
 {
-    userEditDialog userEditDlg(this);
+    userEditDialog userEditDlg(this, m_ubook);
     user *u = const_cast<user *>(&(*m_ubook)[index.row()]);
     userEditDlg.setUserForEdit(u);
     userEditDlg.setWindowTitle("Редактирование пользователя");
-    if (userEditDlg.exec() != userEditDialog::Accepted)
-    {
-        return;
-    }
+    if (userEditDlg.exec() != userEditDialog::Accepted) return;
     emit m_ubook->dataChanged();
 }
 
 void adminDialog::updateTable()
 {
-    ui->tableWidget->clearContents();
+    ui->tableWidget->clear();
+    ui->tableWidget->setRowCount(0);
     for (uint i = 0; i < m_ubook->size(); i++)
     {
-        QTableWidgetItem *username = new QTableWidgetItem(m_ubook->operator[](i).name());
+        QTableWidgetItem *username = new QTableWidgetItem((*m_ubook)[i].name());
         QTableWidgetItem *usertype = nullptr;
-        switch (m_ubook->operator[](i).type())
+        switch ((*m_ubook)[i].type())
         {
         case user::utype::ADMIN:
             usertype = new QTableWidgetItem("админ");

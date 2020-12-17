@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QFile>
 #include <QLineEdit>
+#include <QVBoxLayout>
 
 #include "config.h"
 #include "user.h"
@@ -36,7 +37,6 @@ MainWindow::MainWindow(QWidget *parent)
         initDlg->exec();
     }
     usersbook.loadFromFile(config::fileUsers);
-
 }
 
 MainWindow::~MainWindow()
@@ -82,7 +82,7 @@ void MainWindow::on_loginButton_clicked()
 
     const QString login = ui->usernameEdit->text();
     const QString password = ui->passwdEdit->text();
-    auto interfaceType = usersbook.checkUser(login.trimmed(), password.trimmed());
+    auto interfaceType = usersbook.findUser(login.trimmed(), password.trimmed());
 
     switch (interfaceType)
     {
