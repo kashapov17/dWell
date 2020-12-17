@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Login</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/Go-home-2.svg</normaloff>:/icons/Go-home-2.svg</iconset>
+  </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="QPushButton" name="loginButton">
     <property name="geometry">
@@ -33,9 +37,9 @@
    <widget class="QLabel" name="login">
     <property name="geometry">
      <rect>
-      <x>20</x>
-      <y>60</y>
-      <width>111</width>
+      <x>22</x>
+      <y>62</y>
+      <width>112</width>
       <height>16</height>
      </rect>
     </property>
@@ -46,38 +50,50 @@
    <widget class="QLabel" name="password">
     <property name="geometry">
      <rect>
-      <x>70</x>
-      <y>110</y>
-      <width>56</width>
-      <height>15</height>
+      <x>40</x>
+      <y>120</y>
+      <width>46</width>
+      <height>16</height>
      </rect>
     </property>
     <property name="text">
      <string>Пароль</string>
     </property>
    </widget>
-   <widget class="QLineEdit" name="usernameEdit">
+   <widget class="QWidget" name="">
     <property name="geometry">
      <rect>
-      <x>140</x>
-      <y>60</y>
-      <width>113</width>
-      <height>23</height>
+      <x>141</x>
+      <y>61</y>
+      <width>127</width>
+      <height>78</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QLineEdit" name="passwdEdit">
-    <property name="geometry">
-     <rect>
-      <x>140</x>
-      <y>110</y>
-      <width>113</width>
-      <height>23</height>
-     </rect>
-    </property>
-    <property name="echoMode">
-     <enum>QLineEdit::Password</enum>
-    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QLineEdit" name="usernameEdit"/>
+     </item>
+     <item>
+      <spacer name="verticalSpacer">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>18</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="passwdEdit">
+       <property name="echoMode">
+        <enum>QLineEdit::Password</enum>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -128,7 +144,9 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>actionClose</sender>

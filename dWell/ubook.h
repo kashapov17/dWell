@@ -3,7 +3,6 @@
 
 #include <QVector>
 #include <QObject>
-#include <QFile>
 
 #include "user.h"
 
@@ -29,6 +28,9 @@ public:
     /// Определяет размер коллекции (количество пользователей системы).
     SizeType size() const {return mUsers.size();};
 
+signals:
+    void dataChanged();
+
 private:
     QVector<user> mUsers;
     void save(QDataStream &ost) const;
@@ -37,8 +39,6 @@ private:
 private slots:
     void saveToFile(const QString &filename) const;
 
-signals:
-    void dataChanged();
 };
 
 #endif // UBOOK_H

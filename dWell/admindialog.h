@@ -24,6 +24,8 @@ private slots:
 
     void on_tableWidget_doubleClicked(const QModelIndex &index);
 
+    void on_logoutButton_clicked();
+
 private:
     ubook *m_ubook;
     Ui::adminDialog *ui;

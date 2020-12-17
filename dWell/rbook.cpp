@@ -33,13 +33,13 @@ void rbook::saveToFile(const QString &filename) const
 
 void rbook::loadFromFile(const QString &filename)
 {
-    QFile ubookfile(filename);
+    QFile rbookfile(filename);
     // Открываем файл только для чтения
-    if (!ubookfile.open(QIODevice::ReadOnly))
+    if (!rbookfile.open(QIODevice::ReadOnly))
     {
-        throw std::runtime_error((tr("open(): ") + ubookfile.errorString()).toStdString());
+        throw std::runtime_error((tr("open(): ") + rbookfile.errorString()).toStdString());
     }
-    QDataStream ist(&ubookfile);
+    QDataStream ist(&rbookfile);
     load(ist);
 }
 
@@ -51,7 +51,7 @@ void rbook::load(QDataStream &ist)
     while (!ist.atEnd())
     {
         room r;
-        // Читаем очередного комнату из потока
+        // Читаем очередную комнату из потока
         ist >> r;
         // Если возникла ошибка, запускаем исключительную ситуацию
         if (ist.status() == QDataStream::ReadCorruptData)

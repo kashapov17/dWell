@@ -28,6 +28,7 @@ public:
      */
     const habitant &operator[](SizeType idx) const {return mHabitants[idx];};
     void setNumber(uint &n) {mNumber = n;};
+    void setCapacity(uint &n) {mHabitants.resize(n);};
 };
 
 // Запись данных комнаты в поток

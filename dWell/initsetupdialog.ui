@@ -13,6 +13,10 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
+  <property name="windowIcon">
+   <iconset resource="resources.qrc">
+    <normaloff>:/icons/Emblem-system.svg</normaloff>:/icons/Emblem-system.svg</iconset>
+  </property>
   <widget class="QPushButton" name="saveButton">
    <property name="geometry">
     <rect>
@@ -152,7 +156,9 @@
    </property>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="resources.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>saveButton</sender>

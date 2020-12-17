@@ -4,9 +4,7 @@
 
 room::room()
 {
-    dormitory *dorm = new dormitory;
-    dorm->loadFromFile(config::dormConf);
-    mHabitants.resize(dorm->roomSlotsNumber());
+    ;
 }
 
 void room::checkin(habitant h)

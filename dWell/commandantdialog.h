@@ -3,6 +3,9 @@
 
 #include <QDialog>
 
+#include "rbook.h"
+#include "config.h"
+
 namespace Ui {
 class commandantDialog;
 }
@@ -16,7 +19,11 @@ public:
     ~commandantDialog();
 
 private:
+    rbook *m_rbook;
     Ui::commandantDialog *ui;
+
+private slots:
+    void updateTable();
 };
 
 #endif // COMMANDANTDIALOG_H

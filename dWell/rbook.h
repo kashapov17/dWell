@@ -1,23 +1,25 @@
 #ifndef RBOOK_H
 #define RBOOK_H
 
-#include "room.h"
-
 #include <QVector>
 
-class rbook
+#include "room.h"
+
+class rbook : public QObject
 {
+    Q_OBJECT
 public:
     using SizeType = uint;
     rbook();
+
     void insert(room &r);
     void erase(const int &idx);
-
-    void loadFromFile(const QString &filename);
 
     const room &operator[](SizeType idx) const {return mRooms[idx];};
     /// Определяет размер коллекции (количество комнат системы).
     SizeType size() const {return mRooms.size();};
+
+    void loadFromFile(const QString &filename);
 private:
     QVector<room> mRooms;
     void save(QDataStream &ost) const;

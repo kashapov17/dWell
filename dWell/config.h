@@ -7,7 +7,7 @@
 namespace config
 {
     const char applicationName[] = QT_TRANSLATE_NOOP("Config", "dWell");
-    const char applicationVersion[] = "20201216";
+    const char applicationVersion[] = "20201217";
     const QString fileUsers = "users.bin";
     const QString fileRooms = "rooms.bin";
     const QString dormConf = "dormcfg.bin";

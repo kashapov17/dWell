@@ -34,7 +34,6 @@ void adminDialog::on_addButton_clicked()
     user *u = new user;
     userAddtDlg.setUser(u);
     userAddtDlg.setWindowTitle("Создание пользователя");
-    userAddtDlg.exec();
     if (userAddtDlg.exec() != userEditDialog::Accepted)
     {
         return;
@@ -91,4 +90,7 @@ void adminDialog::updateTable()
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
 }
 
-
+void adminDialog::on_logoutButton_clicked()
+{
+    this->close();
+}
