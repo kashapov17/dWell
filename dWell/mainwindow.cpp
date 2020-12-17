@@ -29,7 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     if (!QFile(config::fileUsers).exists())
     {
-        QMessageBox::warning(this, "Ошибка", "Система не инсталлирована."
+        QMessageBox::warning(this, "Ошибка", "<b>Система не инсталлирована<b>\n"
                                              "Будет открыто окно начальной настройки.",
                              QMessageBox::Ok);
         initSetupDialog *initDlg = new initSetupDialog(this);
@@ -92,19 +92,25 @@ void MainWindow::on_loginButton_clicked()
             adminDlg->setWindowTitle("Панель администрирования");
             adminDlg->exec();
         }
-            break;
+        break;
         case user::utype::COMMANDANT:
-            commandantDialog(this).show();
-            break;
+        {
+            commandantDialog *comDlg = new commandantDialog(this);
+            comDlg->setWindowTitle("Панель управления проживающими");
+            comDlg->exec();
+        }
+        break;
         case user::utype::STUDENT:
-            studentDialog(this).show();
+        {
+            studentDialog *studDlg = new studentDialog(this);
+            studDlg->setWindowTitle("Личный кабинет студента");
+            studDlg->exec();
+        }
             break;
         default:
-        {
             QMessageBox::critical(this, "Ошибка", "Неверный пароль или логин", QMessageBox::Ok);
-
-        }
     }
     ui->usernameEdit->clear();
     ui->passwdEdit->clear();
+    ui->usernameEdit->activateWindow();
 }

@@ -3,23 +3,65 @@
 
 #include <QString>
 #include <QDate>
-
+#include <QDataStream>
 
 class habitant
 {
-public:
-    habitant();
 
 private:
-    QString fname;
-    QString lname;
-    QString patronymic;
-    QDate birthDate;
-    uint studentID;
-    uint numOfCourse;
-    uint group;
-    uint roomNumber;
+    QString mFname;
+    QString mLname;
+    QString mPatronymic;
+    QDate mBirthDate;
+    uint mStudentID;
+    uint mNumOfCourse;
+    uint mGroup;
+    uint mRoomNumber;
+
+public:
+    struct habitantData
+    {
+        QString fname;
+        QString lname;
+        QString patronymic;
+        QDate birthDate;
+        uint studentID;
+        uint numOfCourse;
+        uint group;
+        uint roomNumber;
+    };
+    habitant();
+    habitant(habitantData *);
+    void setData(habitantData *);
+
+    const QString fname() const {return mFname;};
+    const QString lname() const {return mLname;};
+    const QString patronymic() const {return mPatronymic;};
+    const QDate birthDate() const {return mBirthDate;};
+    uint studentID() const {return mStudentID;};
+    uint numOfCourse() const {return mNumOfCourse;};
+    uint group() const {return mGroup;};
+    uint roomNumber() const {return mRoomNumber;};
 
 };
+
+
+// Запись пользователя в поток
+inline QDataStream &operator<< (QDataStream &ost, const habitant &h)
+{
+    ost << h.fname() << h.lname() << h.patronymic() << h.birthDate()
+        << h.studentID() << h.group() << h.roomNumber();
+    return ost;
+}
+
+// Считывание пользователя из потока
+inline QDataStream &operator>> (QDataStream &ist, habitant &h)
+{
+    habitant::habitantData hd;
+    ist >> hd.fname >> hd.lname >> hd.patronymic >> hd.birthDate;
+    ist >> hd.studentID >> hd.numOfCourse >> hd.group >> hd.roomNumber;
+    h.setData(&hd);
+    return ist;
+}
 
 #endif // HABITANT_H

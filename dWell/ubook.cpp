@@ -7,7 +7,7 @@ ubook::ubook()
     connect(this, &ubook::dataChanged, [this] { saveToFile(config::fileUsers);});
 }
 
-user::utype ubook::findUser(const QString &name, const QString &passwd)
+user::utype ubook::findUser(const QString &name, const QString &passwd) const
 {
     for (const auto &it : mUsers)
         if (it.name() == name)
@@ -16,36 +16,6 @@ user::utype ubook::findUser(const QString &name, const QString &passwd)
 
     return user::utype::UNKNOWN;
 }
-
-//ubook::userError ubook::checkUser(user *u)
-//{
-//    if (u->name().isEmpty()) return WRONG_NAME;
-//    if (u->passwd().isEmpty()) return WRONG_PASSWORD;
-//    if(u->type() >= user::UNKNOWN && u->type() < 0) return WRONG_TYPE;
-//    if (findUser(u->name(), u->passwd()) != user::UNKNOWN) return EXIST;
-//    return OK;
-//}
-
-//const QString ubook::userErrorToString(ubook::userError e)
-//{
-//    switch (e)
-//    {
-//    case ubook::EXIST:
-//        return "Данный пользователь уже существует";
-//        break;
-//    case ubook::WRONG_NAME:
-//        return "Введено некорректное имя пользователя";
-//        break;
-//    case ubook::WRONG_PASSWORD:
-//        return "Введён некорректный пароль";
-//        break;
-//    case ubook::WRONG_TYPE:
-//        return "Введён некорректный тип пользователя";
-//        break;
-//    default:
-//        return "ok";
-//    }
-//}
 
 void ubook::insert(user &user)
 {

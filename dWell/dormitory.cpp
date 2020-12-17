@@ -10,12 +10,14 @@ dormitory::dormitory(QString &name, uint8_t &slotsn)
     saveToFile(config::dormConf);
 }
 
+dormitory::dormitory() {}
+
 const QString dormitory::name()
 {
     return dormName;
 }
 
-uint8_t dormitory::slotsNumber()
+uint8_t dormitory::roomSlotsNumber()
 {
     return slotsNum;
 }

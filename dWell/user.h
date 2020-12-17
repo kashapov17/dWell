@@ -11,18 +11,18 @@ public:
     enum utype {ADMIN, COMMANDANT, STUDENT, UNKNOWN};
     user();
     user(QString, QString, utype);
-    const QString name() const;
-    const QString passwd() const;
-    utype type() const;
+    const QString name() const {return mName;};
+    const QString passwd() const {return mPasswd;};
+    utype type() const {return mType;};
     void setName(QString &);
     void setPasswd(QString &);
     void setType(utype &);
     void setData(QString &, QString &, utype &);
 
 private:
-    QString m_name;
-    QString m_passwd;
-    utype m_type;
+    QString mName;
+    QString mPasswd;
+    utype mType;
 };
 
 // Запись пользователя в поток

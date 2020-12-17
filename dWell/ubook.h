@@ -14,12 +14,11 @@ public:
     using SizeType = uint;
     ubook();
 
-    user::utype findUser(const QString &name, const QString &passwd);
+    user::utype findUser(const QString &name, const QString &passwd) const;
 
     void insert(user &user);
     void erase(const int &idx);
-    void save(QDataStream &ost) const;
-    void load(QDataStream &ist);
+
     void loadFromFile(const QString &filename);
     /**
      * @brief Оператор [].
@@ -32,6 +31,8 @@ public:
 
 private:
     QVector<user> mUsers;
+    void save(QDataStream &ost) const;
+    void load(QDataStream &ist);
 
 private slots:
     void saveToFile(const QString &filename) const;
