@@ -2,7 +2,6 @@
 #include <QString>
 #include <QDataStream>
 #include <QFile>
-#include <QDebug>
 
 #include "../dWell/user.h"
 
@@ -24,7 +23,7 @@ private slots:
 
 void testUser::getName()
 {
-        QString n = "admin";
+    QString n = "admin";
     user u(n, "P@ssw0rd", user::ADMIN);
     QVERIFY(u.name() == n);
 }
@@ -78,6 +77,9 @@ void testUser::setName()
     QString newn = "anykey";
     u.setName(newn);
     QCOMPARE(u.name(), "anykey");
+    newn = "     anykey         ";
+    u.setName(newn);
+    QVERIFY2(u.name() == "anykey", "wrong data with not trimmed name");
 }
 
 void testUser::setPassword()
@@ -89,6 +91,9 @@ void testUser::setPassword()
     QString newp = "ia8vow1eePahzio";
     u.setPasswd(newp);
     QCOMPARE(u.passwd(), "ia8vow1eePahzio");
+    newp = "   ia8vow1eePahzio   ";
+    u.setPasswd(newp);
+    QVERIFY2(u.passwd() == "ia8vow1eePahzio", "wrong data with not trimmed password");
 }
 
 void testUser::setType()
