@@ -9,5 +9,4 @@ TEMPLATE = app
 HEADERS +=  ../dWell/user.h
 
 SOURCES +=  tst_testuser.cpp \
-            tst_testubook.cpp \
             ../dWell/user.cpp

@@ -1,6 +1,8 @@
 #include <QtTest>
 #include <QString>
 #include <QDataStream>
+#include <QFile>
+#include <QDebug>
 
 #include "../dWell/user.h"
 
@@ -17,12 +19,12 @@ private slots:
     void setName();
     void setPassword();
     void setType();
-    void writeAndReadFromStream();
+    void writeAndReadFromFile();
 };
 
 void testUser::getName()
 {
-    QString n = "admin";
+        QString n = "admin";
     user u(n, "P@ssw0rd", user::ADMIN);
     QVERIFY(u.name() == n);
 }
@@ -44,19 +46,27 @@ void testUser::getType()
     QVERIFY(us.type() == t);
     t = user::COMMANDANT;
     user uc("comm", "P@ssw0rd", t);
-    QVERIFY(us.type() == t);
+    QVERIFY(uc.type() == t);
 }
 
-void testUser::writeAndReadFromStream()
+void testUser::writeAndReadFromFile()
 {
     QString n = "admin";
     QString p = "P@ssw0rd";
     user::utype t = user::ADMIN;
+    QFile f("file");
+    f.open(QIODevice::WriteOnly);
+    QDataStream wstr(&f);
     user wu(n, p, t);
-    QDataStream stream;
+    wstr << wu;
+    f.close();
+    f.open(QIODevice::ReadOnly);
+    QDataStream rstr(&f);
     user ru;
-    stream << wu >> ru;
-    QVERIFY(ru.name() == n and ru.passwd() == p and ru.type() == t);
+    rstr >> ru;
+    f.close();
+    f.remove();
+    QVERIFY(ru.name() == n && ru.passwd() == p && ru.type() == t);
 }
 
 void testUser::setName()
@@ -93,5 +103,4 @@ void testUser::setType()
 }
 
 QTEST_APPLESS_MAIN(testUser)
-
 #include "tst_testuser.moc"
