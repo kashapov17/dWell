@@ -18,16 +18,16 @@ userEditDialog::~userEditDialog()
 
 void userEditDialog::accept()
 {
-    QString username = ui->usernameEdit->text();
-    QString passwd = ui->passwdEdit->text();
+    QString username = ui->usernameEdit->text().trimmed();
+    QString passwd = ui->passwdEdit->text().trimmed();
     user::utype type = user::utype(ui->typeBox->currentIndex());
-//    user *u = new user;
-//    ubook::userError e = m_ubook->checkUser(m_user);
-    m_user->setData(username, passwd, type);
-//    if (e != ubook::OK)
-//        QMessageBox::warning(this, "Ошибка", m_ubook->userErrorToString(e), QMessageBox::StandardButton::Ok);
-//    else
+    if(m_ubook->findUser(username, passwd) != user::UNKNOWN)
+        QMessageBox::warning(this, "Ошибка", "Такой пользователь уже существует", QMessageBox::StandardButton::Ok);
+    else
+    {
+        m_user->setData(username, passwd, type);
         QDialog::accept();
+    }
 }
 
 void userEditDialog::setUser(user *u)
@@ -45,10 +45,10 @@ void userEditDialog::setUserForEdit(user *u)
 
 void userEditDialog::on_usernameEdit_textChanged(const QString &username)
 {
-    ui->saveButton->setDisabled(username.isEmpty() or ui->passwdEdit->text().isEmpty());
+    ui->saveButton->setDisabled(username.trimmed().isEmpty() or ui->passwdEdit->text().trimmed().isEmpty());
 }
 
 void userEditDialog::on_passwdEdit_textChanged(const QString &passwd)
 {
-    ui->saveButton->setDisabled(passwd.isEmpty() or ui->usernameEdit->text().isEmpty());
+    ui->saveButton->setDisabled(passwd.trimmed().isEmpty() or ui->usernameEdit->text().trimmed().isEmpty());
 }
