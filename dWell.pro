@@ -1,6 +1,5 @@
 TEMPLATE = subdirs
 
 SUBDIRS += \
-    dWell/dWell.pro \
+    dWell \
     test
-    test/test.pro
