@@ -14,7 +14,7 @@ class adminDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit adminDialog(QWidget *parent, ubook *);
+    explicit adminDialog(QWidget *parent);
     ~adminDialog();
 
 private slots:

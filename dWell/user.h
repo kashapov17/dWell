@@ -14,10 +14,7 @@ public:
     const QString name() const {return mName;};
     const QString passwd() const {return mPasswd;};
     utype type() const {return mType;};
-    void setName(QString &);
-    void setPasswd(QString &);
-    void setType(utype &);
-    void setData(QString &, QString &, utype &);
+    bool setData(QString &, QString &, utype &);
 
 private:
     QString mName;

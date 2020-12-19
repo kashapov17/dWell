@@ -19,7 +19,6 @@ public:
 
 private:
     Ui::MainWindow *ui;
-    ubook usersbook;
 
 private slots:
     void about_qt();

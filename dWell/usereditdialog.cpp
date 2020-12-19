@@ -1,13 +1,15 @@
 #include "usereditdialog.h"
 #include "ui_usereditdialog.h"
 
+#include "tools.h"
+
 #include <QMessageBox>
 
-userEditDialog::userEditDialog(QWidget *parent, ubook *ub) :
+userEditDialog::userEditDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::userEditDialog)
 {
-    m_ubook = ub;
+    m_ubook = tools::getUbook();
     ui->setupUi(this);
 }
 
@@ -21,12 +23,14 @@ void userEditDialog::accept()
     QString username = ui->usernameEdit->text().trimmed();
     QString passwd = ui->passwdEdit->text().trimmed();
     user::utype type = user::utype(ui->typeBox->currentIndex());
-    if(m_ubook->findUser(username, passwd) != user::UNKNOWN)
+    if(m_ubook->findUserByName(username) != user::UNKNOWN)
         QMessageBox::warning(this, "Ошибка", "Такой пользователь уже существует", QMessageBox::StandardButton::Ok);
     else
     {
-        m_user->setData(username, passwd, type);
-        QDialog::accept();
+        if(!m_user->setData(username, passwd, type))
+            QMessageBox::warning(this, "Ошибка", "Введены некорректные данные", QMessageBox::StandardButton::Ok);
+        else
+            QDialog::accept();
     }
 }
 

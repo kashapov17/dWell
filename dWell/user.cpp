@@ -5,29 +5,20 @@ user::user()
 
 user::user(QString name, QString passwd, utype type)
 {
-    mName = name;;
-    mPasswd = passwd;
-    mType = type;
+    setData(name, passwd, type);
 }
 
-void user::setName(QString &name)
+bool user::setData(QString &name, QString &passwd, utype &type)
 {
-    mName = name;
-}
-
-void user::setPasswd(QString &passwd)
-{
-    mPasswd = passwd;
-}
-
-void user::setType(utype &type)
-{
-    mType = type;
-}
-
-void user::setData(QString &name, QString &passwd, utype &type)
-{
-    setName(name);
-    setPasswd(passwd);
-    setType(type);
+    name = name.trimmed();
+    passwd = passwd.trimmed();
+    if (!name.isEmpty() and !passwd.isEmpty() and
+            (type == user::ADMIN or type == user::COMMANDANT or type == user::STUDENT))
+    {
+        mName = name;
+        mPasswd = passwd;
+        mType = type;
+        return true;
+    }
+    return false;
 }

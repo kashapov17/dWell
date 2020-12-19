@@ -1,5 +1,6 @@
 #include "ubook.h"
 #include "config.h"
+
 #include <QFile>
 
 ubook::ubook()
@@ -10,23 +11,41 @@ ubook::ubook()
 user::utype ubook::findUser(const QString &name, const QString &passwd) const
 {
     for (const auto &it : mUsers)
-        if (it.name() == name)
-            if (it.passwd() == passwd)
-                return it.type();
+        if (it.name() == name.trimmed() and it.passwd() == passwd.trimmed())
+            return it.type();
 
     return user::utype::UNKNOWN;
 }
 
-void ubook::insert(user &user)
+user::utype ubook::findUserByName(const QString &name) const
 {
-    mUsers.push_back(user);
-    emit dataChanged();
+     for (const auto &it : mUsers)
+         if(it.name() == name.trimmed())
+             return it.type();
+
+     return user::utype::UNKNOWN;
 }
 
-void ubook::erase(const int &idx)
+bool ubook::insert(user &user)
 {
-    mUsers.erase(std::next(mUsers.begin(), idx));
-    emit dataChanged();
+    if (findUser(user.name(), user.passwd()) == user::UNKNOWN)
+    {
+        mUsers.push_back(user);
+        emit dataChanged();
+        return true;
+    }
+    return false;
+}
+
+bool ubook::erase(const uint &idx)
+{
+    if (idx < size())
+    {
+        mUsers.erase(std::next(mUsers.begin(), idx));
+        emit dataChanged();
+        return true;
+    }
+    return false;
 }
 
 void ubook::save(QDataStream &ost) const
@@ -39,7 +58,7 @@ void ubook::save(QDataStream &ost) const
         // Если возникла ошибка, запускаем исключительную ситуацию
         if (ost.status() == QDataStream::WriteFailed)
         {
-            throw std::runtime_error(tr("Write to the stream failed").toStdString());
+            throw std::runtime_error(QString("Write to the stream failed").toStdString());
         }
     }
 }
@@ -58,7 +77,7 @@ void ubook::loadFromFile(const QString &filename)
     // Открываем файл только для чтения
     if (!ubookfile.open(QIODevice::ReadOnly))
     {
-        throw std::runtime_error((tr("open(): ") + ubookfile.errorString()).toStdString());
+        throw std::runtime_error((QString("open(): ") + ubookfile.errorString()).toStdString());
     }
     QDataStream ist(&ubookfile);
     load(ist);
@@ -79,7 +98,7 @@ void ubook::load(QDataStream &ist)
         {
             throw std::runtime_error(tr("Corrupt data were read from the stream").toStdString());
         }
-        // Вставляем прочитанного пользователя в конец вектора mUsers
-        mUsers.push_back(u);
+        else // Вставляем прочитанного пользователя в конец вектора mUsers
+            mUsers.push_back(u);
     }
 }

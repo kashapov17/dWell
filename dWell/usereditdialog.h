@@ -14,7 +14,7 @@ class userEditDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit userEditDialog(QWidget *parent, ubook *ub);
+    explicit userEditDialog(QWidget *parent);
     ~userEditDialog();
     void setUser(user *u);
     void setUserForEdit(user *u);

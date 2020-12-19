@@ -10,6 +10,7 @@
 
 #include "config.h"
 #include "user.h"
+#include "tools.h"
 
 #include "admindialog.h"
 #include "commandantdialog.h"
@@ -23,20 +24,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    connect(ui->actionAbout_Qt, &QAction::triggered, [this] {about_qt();});
-    connect(ui->actionAbout_dWell, &QAction::triggered, [this] {about_dwell();});
-    connect(ui->actionAutors, &QAction::triggered, [this] {about_autors();});
+    connect(ui->actionAbout_Qt, &QAction::triggered, this, &MainWindow::about_qt);
+    connect(ui->actionAbout_dWell, &QAction::triggered, this, &MainWindow::about_dwell);
+    connect(ui->actionAutors, &QAction::triggered, this, &MainWindow::about_autors);
 
-    if (!QFile(config::fileUsers).exists())
-    {
-        QMessageBox::warning(this, "Ошибка", "<b>Система не инсталлирована<b>\n"
-                                             "Будет открыто окно начальной настройки.",
-                             QMessageBox::Ok);
-        initSetupDialog *initDlg = new initSetupDialog(this);
-        initDlg->setWindowTitle("Мастер начальной настройки");
-        initDlg->exec();
-    }
-    usersbook.loadFromFile(config::fileUsers);
+    tools::initSystem(this);
 }
 
 MainWindow::~MainWindow()
@@ -72,45 +64,26 @@ void MainWindow::about_dwell()
             "This application is dynamically linked against the<br>"
             "<a href=\"https://www.qt.io/developers/\">Qt Library</a> "
             "v. %3.")
-            .arg(config::applicationName).arg(config::applicationVersion)
-            .arg(qVersion()));
+            .arg(config::applicationName, config::applicationVersion, qVersion()));
     aboutDlg.exec();
 }
 
 void MainWindow::on_loginButton_clicked()
 {
-
+    auto *usersbook = tools::getUbook();
     const QString login = ui->usernameEdit->text();
     const QString password = ui->passwdEdit->text();
-    auto interfaceType = usersbook.findUser(login.trimmed(), password.trimmed());
+    auto userType = usersbook->findUser(login, password);
 
-    switch (interfaceType)
+    if (userType == user::UNKNOWN)
+        QMessageBox::critical(this, "Ошибка", "Неверный пароль или логин", QMessageBox::Ok);
+    else
     {
-        case user::utype::ADMIN:
-        {
-            adminDialog *adminDlg = new adminDialog(this, reinterpret_cast<ubook*>(&usersbook));
-            adminDlg->setWindowTitle("Панель администрирования");
-            adminDlg->exec();
-        }
-        break;
-        case user::utype::COMMANDANT:
-        {
-            commandantDialog *comDlg = new commandantDialog(this);
-            comDlg->setWindowTitle("Панель управления проживающими");
-            comDlg->exec();
-        }
-        break;
-        case user::utype::STUDENT:
-        {
-            studentDialog *studDlg = new studentDialog(this);
-            studDlg->setWindowTitle("Личный кабинет студента");
-            studDlg->exec();
-        }
-            break;
-        default:
-            QMessageBox::critical(this, "Ошибка", "Неверный пароль или логин", QMessageBox::Ok);
+        auto userDialog = tools::getUserInterface(this, userType);
+        userDialog->exec();
+        delete userDialog;
     }
     ui->usernameEdit->clear();
     ui->passwdEdit->clear();
-    ui->usernameEdit->activateWindow();
+    delete usersbook;
 }

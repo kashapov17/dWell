@@ -15,8 +15,10 @@ private:
 public:
     using SizeType = uint;
     room();
+
     void checkin(habitant h);
     void checkout(uint &idx);
+
     uint number() const {return mNumber;};
     uint capacity() const {return mHabitants.capacity();};
     uint size() const {return mHabitants.size();}

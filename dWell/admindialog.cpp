@@ -2,15 +2,16 @@
 #include "ui_admindialog.h"
 
 #include "usereditdialog.h"
+#include "tools.h"
 
 #include <QMessageBox>
 
-adminDialog::adminDialog(QWidget *parent, ubook *users) :
+adminDialog::adminDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::adminDialog)
 {
     ui->setupUi(this);
-    m_ubook = users;
+    m_ubook = tools::getUbook();
 
     connect(m_ubook, &ubook::dataChanged, this, &adminDialog::updateTable);
     connect(ui->tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged,
@@ -30,7 +31,7 @@ adminDialog::~adminDialog()
 
 void adminDialog::on_addButton_clicked()
 {
-    userEditDialog userAddtDlg(this, m_ubook);
+    userEditDialog userAddtDlg(this);
     user *u = new user;
     userAddtDlg.setUser(u);
     userAddtDlg.setWindowTitle("Создание пользователя");
@@ -52,7 +53,7 @@ void adminDialog::on_removeButton_clicked()
 
 void adminDialog::on_tableWidget_doubleClicked(const QModelIndex &index)
 {
-    userEditDialog userEditDlg(this, m_ubook);
+    userEditDialog userEditDlg(this);
     user *u = const_cast<user *>(&(*m_ubook)[index.row()]);
     userEditDlg.setUserForEdit(u);
     userEditDlg.setWindowTitle("Редактирование пользователя");
@@ -62,27 +63,11 @@ void adminDialog::on_tableWidget_doubleClicked(const QModelIndex &index)
 
 void adminDialog::updateTable()
 {
-    ui->tableWidget->clear();
     ui->tableWidget->setRowCount(0);
     for (uint i = 0; i < m_ubook->size(); i++)
     {
         QTableWidgetItem *username = new QTableWidgetItem((*m_ubook)[i].name());
-        QTableWidgetItem *usertype = nullptr;
-        switch ((*m_ubook)[i].type())
-        {
-        case user::utype::ADMIN:
-            usertype = new QTableWidgetItem("админ");
-            break;
-        case user::utype::COMMANDANT:
-            usertype = new QTableWidgetItem("комендант");
-            break;
-        case user::utype::STUDENT:
-                usertype = new QTableWidgetItem("студент");
-                break;
-        default:
-            break;
-        }
-
+        QTableWidgetItem *usertype = new QTableWidgetItem(tools::userTypeToStr((*m_ubook)[i].type()));
         ui->tableWidget->insertRow(i);
         ui->tableWidget->setItem(i, 0, username);
         ui->tableWidget->setItem(i, 1, usertype);

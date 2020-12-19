@@ -14,9 +14,10 @@ public:
     ubook();
 
     user::utype findUser(const QString &name, const QString &passwd) const;
+    user::utype findUserByName(const QString &name) const;
 
-    void insert(user &user);
-    void erase(const int &idx);
+    bool insert(user &user);
+    bool erase(const uint &idx);
 
     void loadFromFile(const QString &filename);
     /**
