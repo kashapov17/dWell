@@ -15,9 +15,7 @@ private slots:
     void getName();
     void getPassword();
     void getType();
-    void setName();
-    void setPassword();
-    void setType();
+    void setData();
     void writeAndReadFromFile();
 };
 
@@ -68,43 +66,17 @@ void testUser::writeAndReadFromFile()
     QVERIFY(ru.name() == n && ru.passwd() == p && ru.type() == t);
 }
 
-void testUser::setName()
+void testUser::setData()
 {
     QString oldn = "admin";
     QString p = "P@ssw0rd";
     user::utype t = user::ADMIN;
     user u(oldn, p, t);
     QString newn = "anykey";
-    u.setName(newn);
-    QCOMPARE(u.name(), "anykey");
-    newn = "     anykey         ";
-    u.setName(newn);
-    QVERIFY2(u.name() == "anykey", "wrong data with not trimmed name");
-}
-
-void testUser::setPassword()
-{
-    QString oldn = "admin";
-    QString p = "P@ssw0rd";
-    user::utype t = user::ADMIN;
-    user u(oldn, p, t);
-    QString newp = "ia8vow1eePahzio";
-    u.setPasswd(newp);
-    QCOMPARE(u.passwd(), "ia8vow1eePahzio");
-    newp = "   ia8vow1eePahzio   ";
-    u.setPasswd(newp);
-    QVERIFY2(u.passwd() == "ia8vow1eePahzio", "wrong data with not trimmed password");
-}
-
-void testUser::setType()
-{
-    QString oldn = "admin";
-    QString p = "P@ssw0rd";
-    user::utype t = user::ADMIN;
-    user u(oldn, p, t);
-    auto newt = user::STUDENT;
-    u.setType(newt);
-    QCOMPARE(u.type(), user::STUDENT);
+    QString newp = "pass";
+    user::utype newt = user::STUDENT;
+    u.setData(newn, newp, newt);
+    QVERIFY(u.name() == newn and u.passwd() == newp and u.type() == newt);
 }
 
 QTEST_APPLESS_MAIN(testUser)
