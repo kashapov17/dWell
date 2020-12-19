@@ -42,13 +42,6 @@ void tools::initSystem(QWidget *parent)
     }
 }
 
-ubook *tools::getUbook()
-{
-    ubook *u = new ubook;
-    u->loadFromFile(config::fileUsers);
-    return u;
-}
-
 QDialog *tools::getUserInterface(QWidget *parent, const user::utype &t)
 {
     switch (t)

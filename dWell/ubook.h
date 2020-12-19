@@ -28,6 +28,7 @@ public:
     const user &operator[](SizeType idx) const {return mUsers[idx];};
     /// Определяет размер коллекции (количество пользователей системы).
     SizeType size() const {return mUsers.size();};
+    static ubook *getUbook();
 
 signals:
     void dataChanged();

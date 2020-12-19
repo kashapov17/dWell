@@ -70,7 +70,7 @@ void MainWindow::about_dwell()
 
 void MainWindow::on_loginButton_clicked()
 {
-    auto *usersbook = tools::getUbook();
+    auto *usersbook = ubook::getUbook();
     const QString login = ui->usernameEdit->text();
     const QString password = ui->passwdEdit->text();
     auto userType = usersbook->findUser(login, password);

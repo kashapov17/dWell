@@ -11,9 +11,8 @@ class tools
 public:
     tools();
     static QString userTypeToStr(const user::utype &);
-    static void initSystem(QWidget *parent);
-    static ubook *getUbook();
-    static QDialog *getUserInterface(QWidget *parent, const user::utype &);
+    static void initSystem(QWidget *);
+    static QDialog *getUserInterface(QWidget *, const user::utype &);
 };
 
 #endif // TOOLS_H

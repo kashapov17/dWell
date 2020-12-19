@@ -37,6 +37,13 @@ bool ubook::insert(user &user)
     return false;
 }
 
+ubook *ubook::getUbook()
+{
+    ubook *u = new ubook;
+    u->loadFromFile(config::fileUsers);
+    return u;
+}
+
 bool ubook::erase(const uint &idx)
 {
     if (idx < size())

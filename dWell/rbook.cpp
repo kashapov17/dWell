@@ -2,10 +2,18 @@
 
 #include <QFile>
 #include <QDataStream>
+#include "config.h"
 
 rbook::rbook()
 {
 
+}
+
+void rbook::touchFile()
+{
+    QFile rbookfile(config::fileRooms);
+    rbookfile.open(QIODevice::NewOnly);
+    rbookfile.close();
 }
 
 void rbook::save(QDataStream &ost) const
@@ -29,6 +37,7 @@ void rbook::saveToFile(const QString &filename) const
     rbookfile.open(QIODevice::WriteOnly);
     QDataStream ost(&rbookfile);
     save(ost);
+    rbookfile.close();
 }
 
 void rbook::loadFromFile(const QString &filename)
@@ -41,6 +50,7 @@ void rbook::loadFromFile(const QString &filename)
     }
     QDataStream ist(&rbookfile);
     load(ist);
+    rbookfile.close();
 }
 
 void rbook::load(QDataStream &ist)

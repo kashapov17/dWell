@@ -11,7 +11,7 @@ adminDialog::adminDialog(QWidget *parent) :
     ui(new Ui::adminDialog)
 {
     ui->setupUi(this);
-    m_ubook = tools::getUbook();
+    m_ubook = ubook::getUbook();
 
     connect(m_ubook, &ubook::dataChanged, this, &adminDialog::updateTable);
     connect(ui->tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged,

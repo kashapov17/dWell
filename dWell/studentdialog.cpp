@@ -12,14 +12,3 @@ studentDialog::~studentDialog()
 {
     delete ui;
 }
-
-
-void studentDialog::on_docqButton_clicked()
-{
-
-}
-
-void studentDialog::on_relocqButton_clicked()
-{
-
-}

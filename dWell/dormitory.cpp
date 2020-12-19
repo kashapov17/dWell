@@ -3,10 +3,11 @@
 #include "dormitory.h"
 #include "config.h"
 
-dormitory::dormitory(QString &name, uint8_t &slotsn)
+dormitory::dormitory(QString &name, uint &roomCapacity, uint &dormCapacity)
 {
-    dormName = name;
-    slotsNum = slotsn;
+    mDormName = name;
+    mRoomCapacity = roomCapacity;
+    mDormCapacity = dormCapacity;
     saveToFile(config::dormConf);
 }
 
@@ -14,17 +15,22 @@ dormitory::dormitory() {}
 
 const QString dormitory::name()
 {
-    return dormName;
+    return mDormName;
 }
 
-uint8_t dormitory::roomSlotsNumber()
+uint dormitory::roomCapacity()
 {
-    return slotsNum;
+    return mRoomCapacity;
+}
+
+uint dormitory::capacity()
+{
+    return mDormCapacity;
 }
 
 void dormitory::save(QDataStream &ost)
 {
-    ost << dormName << slotsNum;
+    ost << mDormName << mRoomCapacity << mDormCapacity;
     // Если возникла ошибка, запускаем исключительную ситуацию
     if (ost.status() == QDataStream::WriteFailed)
     {
@@ -38,6 +44,7 @@ void dormitory::saveToFile(const QString &filename)
     dormConfFile.open(QIODevice::WriteOnly);
     QDataStream ost(&dormConfFile);
     save(ost);
+    dormConfFile.close();
 }
 
 void dormitory::loadFromFile(const QString &filename)
@@ -50,14 +57,14 @@ void dormitory::loadFromFile(const QString &filename)
     }
     QDataStream ist(&dormConfFile);
     load(ist);
+    dormConfFile.close();
 }
 
 void dormitory::load(QDataStream &ist)
 {
-
     while (!ist.atEnd())
     {
-        ist >> dormName >> slotsNum;
+        ist >> mDormName >> mRoomCapacity >> mDormCapacity;
         // Если возникла ошибка, запускаем исключительную ситуацию
         if (ist.status() == QDataStream::ReadCorruptData)
         {

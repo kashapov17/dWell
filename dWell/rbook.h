@@ -19,6 +19,8 @@ public:
     /// Определяет размер коллекции (количество комнат системы).
     SizeType size() const {return mRooms.size();};
 
+    static void touchFile();
+
     void loadFromFile(const QString &filename);
 private:
     QVector<room> mRooms;

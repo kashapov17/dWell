@@ -31,8 +31,8 @@ public:
         uint roomNumber;
     };
     habitant();
-    habitant(habitantData *);
-    void setData(habitantData *);
+    habitant(habitantData *hd);
+    void setData(habitantData *hd);
 
     const QString fname() const {return mFname;};
     const QString lname() const {return mLname;};
@@ -46,7 +46,7 @@ public:
 };
 
 
-// Запись пользователя в поток
+// Запись проживающего в поток
 inline QDataStream &operator<< (QDataStream &ost, const habitant &h)
 {
     ost << h.fname() << h.lname() << h.patronymic() << h.birthDate()
@@ -54,12 +54,12 @@ inline QDataStream &operator<< (QDataStream &ost, const habitant &h)
     return ost;
 }
 
-// Считывание пользователя из потока
+// Считывание проживающего из потока
 inline QDataStream &operator>> (QDataStream &ist, habitant &h)
 {
     habitant::habitantData hd;
-    ist >> hd.fname >> hd.lname >> hd.patronymic >> hd.birthDate;
-    ist >> hd.studentID >> hd.numOfCourse >> hd.group >> hd.roomNumber;
+    ist >> hd.fname >> hd.lname >> hd.patronymic >> hd.birthDate
+            >> hd.studentID >> hd.numOfCourse >> hd.group >> hd.roomNumber;
     h.setData(&hd);
     return ist;
 }

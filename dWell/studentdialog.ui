@@ -13,30 +13,17 @@
   <property name="windowTitle">
    <string>Dialog</string>
   </property>
-  <widget class="QPushButton" name="docqButton">
+  <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
-     <x>150</x>
-     <y>180</y>
-     <width>131</width>
-     <height>23</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Document query</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="relocqButton">
-   <property name="geometry">
-    <rect>
-     <x>150</x>
-     <y>220</y>
+     <x>140</x>
+     <y>50</y>
      <width>121</width>
-     <height>23</height>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
-    <string>Relocation query</string>
+    <string>Привет, студент</string>
    </property>
   </widget>
  </widget>

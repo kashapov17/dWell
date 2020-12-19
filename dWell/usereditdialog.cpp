@@ -1,15 +1,13 @@
 #include "usereditdialog.h"
 #include "ui_usereditdialog.h"
 
-#include "tools.h"
-
 #include <QMessageBox>
 
 userEditDialog::userEditDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::userEditDialog)
 {
-    m_ubook = tools::getUbook();
+    m_ubook = ubook::getUbook();
     ui->setupUi(this);
 }
 

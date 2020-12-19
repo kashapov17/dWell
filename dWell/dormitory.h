@@ -7,22 +7,22 @@
 
 class dormitory
 {
-
 public:
     dormitory();
-    dormitory(QString &, uint8_t &);
+    dormitory(QString &name, uint &roomCapacity, uint &dormCapacity);
     const QString name();
-    uint8_t roomSlotsNumber();
-    void loadFromFile(const QString &filename);
+    uint roomCapacity();
+    uint capacity();
+    static dormitory *getDormCfg();
 
 private:
-    uint8_t slotsNum;
-    QString dormName;
-    QString rbookFilePath;
-    QString ubookFilePath;
+    uint mRoomCapacity;
+    uint mDormCapacity;
+    QString mDormName;
 
-    void load(QDataStream &);
-    void save(QDataStream &);
+    void load(QDataStream &ost);
+    void save(QDataStream &ist);
+    void loadFromFile(const QString &filename);
     void saveToFile(const QString &filename);
 };
 
