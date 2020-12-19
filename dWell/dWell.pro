@@ -20,6 +20,7 @@ SOURCES += \
     rbook.cpp \
     room.cpp \
     studentdialog.cpp \
+    tools.cpp \
     ubook.cpp \
     user.cpp \
     usereditdialog.cpp
@@ -36,6 +37,7 @@ HEADERS += \
     rbook.h \
     room.h \
     studentdialog.h \
+    tools.h \
     ubook.h \
     user.h \
     usereditdialog.h
