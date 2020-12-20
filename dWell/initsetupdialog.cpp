@@ -30,7 +30,8 @@ void initSetupDialog::accept()
     uint dormCap = ui->dormCapBox->text().toUInt();
     dormitory dorm(dormName, roomCap, dormCap);
 
-    rbook::touchFile();
+    rbook rb;
+    rb.touchFile(dormCap, roomCap);
 
     QDialog::accept();
 }

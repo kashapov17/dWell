@@ -9,19 +9,30 @@ rbook::rbook()
 
 }
 
-void rbook::touchFile()
+void rbook::touchFile(uint &dormCap, uint roomCap)
 {
-    QFile rbookfile(config::fileRooms);
-    rbookfile.open(QIODevice::NewOnly);
-    rbookfile.close();
+    for (uint i=0; i < dormCap; i++)
+    {
+        room *r = new room;
+        r->setCapacity(roomCap);
+        uint n = i+1;
+        r->setNumber(n);
+        mRooms.push_back(*r);
+    }
+    saveToFile(config::fileRooms);
+}
+
+void rbook::setCapacity(uint &cap)
+{
+    mRooms.resize(cap);
 }
 
 void rbook::save(QDataStream &ost) const
 {
-    // Цикл по всем пользователям
+    // Цикл по всем комнатам
     for (const auto &r : mRooms)
     {
-        // Выводим данные пользователя в поток
+        // Выводим данные комнаты в поток
         ost << r;
         // Если возникла ошибка, запускаем исключительную ситуацию
         if (ost.status() == QDataStream::WriteFailed)

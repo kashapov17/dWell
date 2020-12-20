@@ -18,8 +18,9 @@ public:
     const room &operator[](SizeType idx) const {return mRooms[idx];};
     /// Определяет размер коллекции (количество комнат системы).
     SizeType size() const {return mRooms.size();};
+    void setCapacity(uint &cap);
 
-    static void touchFile();
+    void touchFile(uint &dormCap, uint roomCap);
 
     void loadFromFile(const QString &filename);
 private:

@@ -10,7 +10,7 @@ namespace config
     const char applicationVersion[] = "20201217";
     const QString fileUsers = "users.dwl";
     const QString fileRooms = "rooms.dwl";
-    const QString dormConf = "dorm.cfg";
+    const QString dormConf = "dorm.dwl";
 }
 
 #endif // CONFIG_H

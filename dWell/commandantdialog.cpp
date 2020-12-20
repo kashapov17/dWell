@@ -1,6 +1,8 @@
 #include "commandantdialog.h"
 #include "ui_commandantdialog.h"
 
+
+
 commandantDialog::commandantDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::commandantDialog)
@@ -24,6 +26,8 @@ void commandantDialog::updateTable()
     {
         auto room = (*m_rbook)[i];
         for (uint j=0; j < room.size(); j++) {
+            if (room.isEmpty())
+                continue;
             auto habitant = room[j];
             QTableWidgetItem *roomNumber = new QTableWidgetItem(habitant.roomNumber());
             QTableWidgetItem *name = new QTableWidgetItem(QString("%1 %2 %3")
@@ -41,4 +45,9 @@ void commandantDialog::updateTable()
         }
     }
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
+}
+
+void commandantDialog::on_checkinButton_clicked()
+{
+
 }

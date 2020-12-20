@@ -29,14 +29,17 @@ public:
      * @return Константная ссылка на проживающего.
      */
     const habitant &operator[](SizeType idx) const {return mHabitants[idx];};
-    void setNumber(uint &n) {mNumber = n;};
+
     void setCapacity(uint &n) {mHabitants.resize(n);};
+    void setNumber(uint &n) {mNumber = n;};
+    bool isEmpty() {return static_cast<bool>(size());};
 };
 
 // Запись данных комнаты в поток
 inline QDataStream &operator<< (QDataStream &ost, const room &r)
 {
     ost << r.number();
+    ost << r.capacity();
     ost << r.size();
     for(uint i=0; i < r.size(); i++)
     {
@@ -48,14 +51,16 @@ inline QDataStream &operator<< (QDataStream &ost, const room &r)
 // Считывание данных комнаты из потока
 inline QDataStream &operator>> (QDataStream &ist, room &r)
 {
-    uint number, size;
-    ist >> number >> size;
-    for (uint i=0; i < size; i++) {
+    uint number, cap, size;
+    ist >> number >> cap >> size;
+    r.setCapacity(cap);
+    r.setNumber(number);
+    for (uint i=0; i < size; i++)
+    {
         habitant h;
         ist >> h;
         r.checkin(h);
     }
-    r.setNumber(number);
     return ist;
 }
 

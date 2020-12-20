@@ -13,7 +13,7 @@ SOURCES += \
     commandantdialog.cpp \
     dormitory.cpp \
     habitant.cpp \
-    habitantadddialog.cpp \
+    habitanteditdialog.cpp \
     initsetupdialog.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -31,7 +31,7 @@ HEADERS += \
     config.h \
     dormitory.h \
     habitant.h \
-    habitantadddialog.h \
+    habitanteditdialog.h \
     initsetupdialog.h \
     mainwindow.h \
     rbook.h \
@@ -45,7 +45,7 @@ HEADERS += \
 FORMS += \
     admindialog.ui \
     commandantdialog.ui \
-    habitantadddialog.ui \
+    habitanteditdialog.ui \
     initsetupdialog.ui \
     mainwindow.ui \
     studentdialog.ui \
