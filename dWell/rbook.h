@@ -14,15 +14,18 @@ public:
 
     void insert(room &r);
     void erase(const int &idx);
-
+    void checkin(uint n, habitant *);
     const room &operator[](SizeType idx) const {return mRooms[idx];};
     /// Определяет размер коллекции (количество комнат системы).
     SizeType size() const {return mRooms.size();};
     void setCapacity(uint &cap);
-
     void touchFile(uint &dormCap, uint roomCap);
 
     void loadFromFile(const QString &filename);
+
+    static rbook *getRbook();
+
+
 private:
     QVector<room> mRooms;
     void save(QDataStream &ost) const;

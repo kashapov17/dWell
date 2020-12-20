@@ -7,17 +7,6 @@
 
 class habitant
 {
-
-private:
-    QString mFname;
-    QString mLname;
-    QString mPatronymic;
-    QDate mBirthDate;
-    uint mStudentID;
-    uint mNumOfCourse;
-    uint mGroup;
-    uint mRoomNumber;
-
 public:
     struct habitantData
     {
@@ -27,9 +16,10 @@ public:
         QDate birthDate;
         uint studentID;
         uint numOfCourse;
-        uint group;
+        QString group;
         uint roomNumber;
     };
+
     habitant();
     habitant(habitantData *hd);
     void setData(habitantData *hd);
@@ -40,11 +30,19 @@ public:
     const QDate birthDate() const {return mBirthDate;};
     uint studentID() const {return mStudentID;};
     uint numOfCourse() const {return mNumOfCourse;};
-    uint group() const {return mGroup;};
+    QString group() const {return mGroup;};
     uint roomNumber() const {return mRoomNumber;};
 
+private:
+    QString mFname;
+    QString mLname;
+    QString mPatronymic;
+    QDate mBirthDate;
+    uint mStudentID;
+    uint mNumOfCourse;
+    QString mGroup;
+    uint mRoomNumber;
 };
-
 
 // Запись проживающего в поток
 inline QDataStream &operator<< (QDataStream &ost, const habitant &h)
@@ -59,7 +57,7 @@ inline QDataStream &operator>> (QDataStream &ist, habitant &h)
 {
     habitant::habitantData hd;
     ist >> hd.fname >> hd.lname >> hd.patronymic >> hd.birthDate
-            >> hd.studentID >> hd.numOfCourse >> hd.group >> hd.roomNumber;
+        >> hd.studentID >> hd.numOfCourse >> hd.group >> hd.roomNumber;
     h.setData(&hd);
     return ist;
 }

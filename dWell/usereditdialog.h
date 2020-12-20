@@ -27,8 +27,8 @@ private:
 private slots:
     /// Обрабатывает подтверждение диалога.
     void accept();
-    void on_usernameEdit_textChanged(const QString &arg1);
-    void on_passwdEdit_textChanged(const QString &arg1);
+    void on_usernameEdit_textChanged(const QString &username);
+    void on_passwdEdit_textChanged(const QString &passwd);
 };
 
 #endif // USEREDITDIALOG_H

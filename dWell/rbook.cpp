@@ -6,7 +6,7 @@
 
 rbook::rbook()
 {
-
+    connect(this, &rbook::dataChanged, [this] { saveToFile(config::fileRooms);});
 }
 
 void rbook::touchFile(uint &dormCap, uint roomCap)
@@ -24,13 +24,27 @@ void rbook::touchFile(uint &dormCap, uint roomCap)
 
 void rbook::setCapacity(uint &cap)
 {
-    mRooms.resize(cap);
+    mRooms.reserve(cap);
+}
+
+rbook *rbook::getRbook()
+{
+    rbook *rb = new rbook;
+    rb->loadFromFile(config::fileRooms);
+    return rb;
+}
+
+void rbook::checkin(uint roomNumber, habitant *h)
+{
+    mRooms[roomNumber-1].checkin(*h);
+    emit dataChanged();
 }
 
 void rbook::save(QDataStream &ost) const
 {
+    ost << mRooms.size();
     // Цикл по всем комнатам
-    for (const auto &r : mRooms)
+    for (auto &r : mRooms)
     {
         // Выводим данные комнаты в поток
         ost << r;
@@ -39,6 +53,28 @@ void rbook::save(QDataStream &ost) const
         {
             throw std::runtime_error(tr("Write to the stream failed").toStdString());
         }
+    }
+}
+
+void rbook::load(QDataStream &ist)
+{
+    // Очищаем контейнер
+    mRooms.clear();
+    // Пока в потоке есть данные
+    uint size;
+    ist >> size;
+    for(uint i=0; i < size; i++)
+    {
+        room r;
+        // Читаем очередную комнату из потока
+        ist >> r;
+        // Если возникла ошибка, запускаем исключительную ситуацию
+        if (ist.status() == QDataStream::ReadCorruptData)
+        {
+            throw std::runtime_error(tr("Corrupt data were read from the stream").toStdString());
+        }
+        // Вставляем прочитанного пользователя в конец вектора mUsers
+        mRooms.push_back(r);
     }
 }
 
@@ -64,22 +100,3 @@ void rbook::loadFromFile(const QString &filename)
     rbookfile.close();
 }
 
-void rbook::load(QDataStream &ist)
-{
-    // Очищаем контейнер
-    mRooms.clear();
-    // Пока в потоке есть данные
-    while (!ist.atEnd())
-    {
-        room r;
-        // Читаем очередную комнату из потока
-        ist >> r;
-        // Если возникла ошибка, запускаем исключительную ситуацию
-        if (ist.status() == QDataStream::ReadCorruptData)
-        {
-            throw std::runtime_error(tr("Corrupt data were read from the stream").toStdString());
-        }
-        // Вставляем прочитанного пользователя в конец вектора mUsers
-        mRooms.push_back(r);
-    }
-}

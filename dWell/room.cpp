@@ -3,9 +3,7 @@
 #include "config.h"
 
 room::room()
-{
-    ;
-}
+{}
 
 void room::checkin(habitant h)
 {
