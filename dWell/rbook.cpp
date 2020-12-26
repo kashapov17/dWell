@@ -40,11 +40,17 @@ void rbook::checkin(uint roomNumber, habitant *h)
     emit dataChanged();
 }
 
+void rbook::checkout(uint roomNumber, uint sid)
+{
+    mRooms[roomNumber-1].checkout(sid);
+    emit dataChanged();
+}
+
 void rbook::save(QDataStream &ost) const
 {
     ost << mRooms.size();
     // Цикл по всем комнатам
-    for (auto &r : mRooms)
+    for (const auto &r : mRooms)
     {
         // Выводим данные комнаты в поток
         ost << r;

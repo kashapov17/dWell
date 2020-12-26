@@ -18,6 +18,7 @@ SOURCES += \
     main.cpp \
     mainwindow.cpp \
     rbook.cpp \
+    relocationdialog.cpp \
     room.cpp \
     studentdialog.cpp \
     tools.cpp \
@@ -35,6 +36,7 @@ HEADERS += \
     initsetupdialog.h \
     mainwindow.h \
     rbook.h \
+    relocationdialog.h \
     room.h \
     studentdialog.h \
     tools.h \
@@ -48,6 +50,7 @@ FORMS += \
     habitanteditdialog.ui \
     initsetupdialog.ui \
     mainwindow.ui \
+    relocationdialog.ui \
     studentdialog.ui \
     usereditdialog.ui
 

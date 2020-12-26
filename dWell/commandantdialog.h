@@ -24,6 +24,9 @@ private:
 private slots:
     void updateTable();
     void on_checkinButton_clicked();
+    void on_pushButton_clicked();
+    void on_checkoutButton_clicked();
+    void on_relocButton_clicked();
 };
 
 #endif // COMMANDANTDIALOG_H

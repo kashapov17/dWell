@@ -1,7 +1,6 @@
 #include "user.h"
 
-user::user()
-{}
+user::user() {}
 
 user::user(QString name, QString passwd, utype type)
 {

@@ -5,7 +5,7 @@
 
 ubook::ubook()
 {
-    connect(this, &ubook::dataChanged, [this] { saveToFile(config::fileUsers);});
+    QObject::connect(this, &ubook::dataChanged, [this] { saveToFile(config::fileUsers);});
 }
 
 user::utype ubook::findUser(const QString &name, const QString &passwd) const
@@ -103,7 +103,7 @@ void ubook::load(QDataStream &ist)
         // Если возникла ошибка, запускаем исключительную ситуацию
         if (ist.status() == QDataStream::ReadCorruptData)
         {
-            throw std::runtime_error(tr("Corrupt data were read from the stream").toStdString());
+            throw std::runtime_error(QString("Corrupt data were read from the stream").toStdString());
         }
         else // Вставляем прочитанного пользователя в конец вектора mUsers
             mUsers.push_back(u);

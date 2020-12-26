@@ -17,7 +17,7 @@ public:
     room();
 
     void checkin(habitant h);
-    void checkout(uint &idx);
+    void checkout(uint sid);
 
     uint number() const {return mNumber;}
     uint capacity() const {return mHabitants.capacity();}
@@ -31,10 +31,12 @@ public:
     const habitant &operator[](SizeType idx) const {return mHabitants[idx];}
 
     void setCapacity(uint &n) {mHabitants.reserve(n);}
-    void setNumber(uint &n) {mNumber = n;};
+    void setNumber(uint &n) {mNumber = n;}
     void clear() {mHabitants.resize(0);}
     bool isEmpty() const {return static_cast<bool>(size());};
     bool availableForCheckin() const {return static_cast<bool>(freeSlots());}
+
+    QVector<habitant>::iterator findBySid(uint sid);
 };
 
 // Запись данных комнаты в поток
@@ -53,7 +55,7 @@ inline QDataStream &operator>> (QDataStream &ist, room &r)
     ist >> number >> cap >> size;
     r.setNumber(number);
     r.setCapacity(cap);
-    if (size)
+    if (size != 0)
         for (uint i=0; i < size; i++)
         {
             habitant h;

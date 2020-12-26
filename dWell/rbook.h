@@ -15,6 +15,7 @@ public:
     void insert(room &r);
     void erase(const int &idx);
     void checkin(uint n, habitant *);
+    void checkout(uint n, uint sid);
     const room &operator[](SizeType idx) const {return mRooms[idx];};
     /// Определяет размер коллекции (количество комнат системы).
     SizeType size() const {return mRooms.size();};
