@@ -1,12 +1,13 @@
 #include "habitanteditdialog.h"
 #include "ui_habitanteditdialog.h"
 
+#include <QMessageBox>
+
 habitantEditDialog::habitantEditDialog(QWidget *parent, QStringList availRooms) :
     QDialog(parent),
     ui(new Ui::habitantEditDialog)
 {
     ui->setupUi(this);
-
     ui->roomNumBox->addItems(availRooms);
 }
 
@@ -26,6 +27,8 @@ void habitantEditDialog::accept()
     hb.group = ui->groupEdit->text();
     hb.numOfCourse = ui->courseBox->currentText().toUInt();
     hb.roomNumber = ui->roomNumBox->currentText().toUInt();
-    mHabitant->setData(&hb);
-    QDialog::accept();
+    if(!mHabitant->setData(&hb))
+        QMessageBox::warning(this, "Ошибка", "Введены некорректные данные", QMessageBox::StandardButton::Ok);
+    else
+        QDialog::accept();
 }

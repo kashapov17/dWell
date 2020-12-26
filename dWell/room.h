@@ -8,9 +8,6 @@
 class room
 {
 
-private:
-    uint mNumber;
-    QVector<habitant> mHabitants;
 
 public:
     using SizeType = uint;
@@ -37,6 +34,10 @@ public:
     bool availableForCheckin() const {return static_cast<bool>(freeSlots());}
 
     QVector<habitant>::iterator findBySid(uint sid);
+
+private:
+    uint mNumber;
+    QVector<habitant> mHabitants;
 };
 
 // Запись данных комнаты в поток

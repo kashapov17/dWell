@@ -17,11 +17,12 @@ commandantDialog::commandantDialog(QWidget *parent) :
     ui(new Ui::commandantDialog)
 {
     ui->setupUi(this);
-    ui->tableWidget->resizeColumnsToContents();
     m_rbook = rbook::getRbook();
 
     connect(m_rbook, &rbook::dataChanged, this, &commandantDialog::updateTable);
     updateTable();
+
+    ui->tableWidget->resizeColumnsToContents();
 
     ui->tableWidget->verticalHeader()->setVisible(false); // отключаем подпись строк таблицы
 
@@ -41,8 +42,7 @@ commandantDialog::commandantDialog(QWidget *parent) :
     });
 }
 
-commandantDialog::~commandantDialog()
-{ delete ui; }
+commandantDialog::~commandantDialog() { delete ui; }
 
 void commandantDialog::updateTable()
 {

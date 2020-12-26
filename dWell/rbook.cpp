@@ -1,8 +1,8 @@
 #include "rbook.h"
+#include "config.h"
 
 #include <QFile>
 #include <QDataStream>
-#include "config.h"
 
 rbook::rbook()
 {

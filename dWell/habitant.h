@@ -7,6 +7,7 @@
 
 class habitant
 {
+
 public:
     struct habitantData
     {
@@ -22,7 +23,7 @@ public:
 
     habitant();
     habitant(habitantData *hd);
-    void setData(habitantData *hd);
+    bool setData(habitantData *hd);
     habitantData *getData() const;
 
     const QString fname() const {return mFname;}

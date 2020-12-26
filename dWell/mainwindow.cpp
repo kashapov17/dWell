@@ -1,22 +1,21 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 
+#include "admindialog.h"
+#include "commandantdialog.h"
+#include "studentdialog.h"
+#include "initsetupdialog.h"
+
+#include "config.h"
+#include "user.h"
+#include "tools.h"
+
 #include <QMessageBox>
 #include <QCryptographicHash>
 #include <QMessageBox>
 #include <QFile>
 #include <QLineEdit>
 #include <QVBoxLayout>
-
-#include "config.h"
-#include "user.h"
-#include "tools.h"
-
-#include "admindialog.h"
-#include "commandantdialog.h"
-#include "studentdialog.h"
-#include "initsetupdialog.h"
-
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)

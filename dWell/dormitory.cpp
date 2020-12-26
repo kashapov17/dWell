@@ -1,7 +1,7 @@
-#include <QFile>
-
 #include "dormitory.h"
 #include "config.h"
+
+#include <QFile>
 
 dormitory::dormitory(QString &name, uint &roomCapacity, uint &dormCapacity)
 {

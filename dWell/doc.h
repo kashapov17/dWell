@@ -6,6 +6,7 @@
 
 class doc
 {
+
 public:
     doc();
     static void generate(const habitant *h);

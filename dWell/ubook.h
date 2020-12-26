@@ -9,6 +9,7 @@
 class ubook : public QObject
 {
     Q_OBJECT
+
 public:
     using SizeType = uint;
     ubook();

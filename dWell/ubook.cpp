@@ -57,16 +57,11 @@ bool ubook::erase(const uint &idx)
 
 void ubook::save(QDataStream &ost) const
 {
-    // Цикл по всем пользователям
     for (const auto &u : mUsers)
     {
-        // Выводим данные пользователя в поток
         ost << u;
-        // Если возникла ошибка, запускаем исключительную ситуацию
         if (ost.status() == QDataStream::WriteFailed)
-        {
             throw std::runtime_error(QString("Write to the stream failed").toStdString());
-        }
     }
 }
 
@@ -81,31 +76,24 @@ void ubook::saveToFile(const QString &filename) const
 void ubook::loadFromFile(const QString &filename)
 {
     QFile ubookfile(filename);
-    // Открываем файл только для чтения
+
     if (!ubookfile.open(QIODevice::ReadOnly))
-    {
         throw std::runtime_error((QString("open(): ") + ubookfile.errorString()).toStdString());
-    }
+
     QDataStream ist(&ubookfile);
     load(ist);
 }
 
 void ubook::load(QDataStream &ist)
 {
-    // Очищаем контейнер
     mUsers.clear();
-    // Пока в потоке есть данные
     while (!ist.atEnd())
     {
         user u;
-        // Читаем очередного пользователя из потока
         ist >> u;
-        // Если возникла ошибка, запускаем исключительную ситуацию
         if (ist.status() == QDataStream::ReadCorruptData)
-        {
             throw std::runtime_error(QString("Corrupt data were read from the stream").toStdString());
-        }
-        else // Вставляем прочитанного пользователя в конец вектора mUsers
+        else
             mUsers.push_back(u);
     }
 }

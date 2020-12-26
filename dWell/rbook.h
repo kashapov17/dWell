@@ -8,18 +8,17 @@
 class rbook : public QObject
 {
     Q_OBJECT
+
 public:
-    using SizeType = uint;
     rbook();
 
-    void insert(room &r);
-    void erase(const int &idx);
+    using SizeType = uint;
     void checkin(uint rn, habitant *);
     void checkout(uint rn, uint sid);
     const room &operator[](SizeType idx) const {return mRooms[idx];}
 
     /// Определяет размер коллекции (количество комнат системы).
-    SizeType size() const {return mRooms.size();};
+    SizeType size() const {return mRooms.size();}
     void setCapacity(uint &cap);
 
     static rbook *getRbook();

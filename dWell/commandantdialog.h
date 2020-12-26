@@ -13,6 +13,7 @@ class commandantDialog;
 class commandantDialog : public QDialog
 {
     Q_OBJECT
+
 public:
     explicit commandantDialog(QWidget *parent = nullptr);
     ~commandantDialog();

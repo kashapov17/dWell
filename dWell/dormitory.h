@@ -7,6 +7,7 @@
 
 class dormitory
 {
+
 public:
     dormitory();
     dormitory(QString &name, uint &roomCapacity, uint &dormCapacity);
