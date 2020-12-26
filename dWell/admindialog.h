@@ -21,10 +21,9 @@ private slots:
     void on_addButton_clicked();
     void on_removeButton_clicked();
     void updateTable();
-
     void on_tableWidget_doubleClicked(const QModelIndex &index);
-
     void on_logoutButton_clicked();
+
 
 private:
     ubook *m_ubook;

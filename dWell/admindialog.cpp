@@ -5,6 +5,7 @@
 #include "tools.h"
 
 #include <QMessageBox>
+#include <set>
 
 #define UNAME_COLUMN 0
 #define HTYPE_COLUMN 1
@@ -46,11 +47,34 @@ void adminDialog::on_addButton_clicked()
 
 void adminDialog::on_removeButton_clicked()
 {
-    int idx = ui->tableWidget->currentIndex().row();
-    QMessageBox::StandardButtons ret = QMessageBox::question(this, "Удаление пользователя", QString("Вы действительно хотите "
-                                                                 "удалить пользователя <b><i>%1</i></b>?").arg((*m_ubook)[idx].name()));
+    QModelIndexList idc = ui->tableWidget->selectionModel()->selectedRows();
+    std::set<uint> rows;
+    {
+        // Вставляем номера выбранных строк в rows
+        for (const auto &i : qAsConst(idc))
+        {
+            rows.insert(i.row());
+        }
+    }
+    QString usersToDelete;
+
+    // если выбрана одна заметка
+    if (rows.size() == 1)
+        usersToDelete = (*m_ubook)[idc.first().row()].name();
+    else // если выбрано несколько
+        for (const auto &it : rows)
+            usersToDelete.append(tr("<br>• ") + (*m_ubook)[it].name());
+
+    QMessageBox::StandardButtons ret = QMessageBox::question(this, "Удаление пользователя",
+                                                             (rows.size() == 1) ? QString("Вы действительно хотите "
+                                                                 "удалить пользователя <b><i>%1</i></b>?").arg(usersToDelete) :
+                                                                                  QString("Вы действительно хотите "
+                                                                 "удалить пользователей <b><i>%1</i></b>").arg(usersToDelete),
+                                                             QMessageBox::Yes | QMessageBox::No);
     if (ret == QMessageBox::No) return;
-    m_ubook->erase(idx);
+
+    for (auto it = rows.rbegin(); it != rows.rend(); ++it)
+        m_ubook->erase(*it);
 }
 
 void adminDialog::on_tableWidget_doubleClicked(const QModelIndex &index)
