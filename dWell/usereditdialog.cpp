@@ -9,6 +9,7 @@ userEditDialog::userEditDialog(QWidget *parent) :
 {
     m_ubook = ubook::getUbook();
     ui->setupUi(this);
+    editMode = false;
 }
 
 userEditDialog::~userEditDialog()
@@ -21,10 +22,11 @@ void userEditDialog::accept()
     QString username = ui->usernameEdit->text().trimmed();
     QString passwd = ui->passwdEdit->text().trimmed();
     user::utype type = user::utype(ui->typeBox->currentIndex());
-    if(m_ubook->findUserByName(username) != user::UNKNOWN)
+    if(m_ubook->findUserByName(username) != user::UNKNOWN && !editMode)
         QMessageBox::warning(this, "Ошибка", "Такой пользователь уже существует", QMessageBox::StandardButton::Ok);
     else
     {
+        editMode = false;
         if(!m_user->setData(username, passwd, type))
             QMessageBox::warning(this, "Ошибка", "Введены некорректные данные", QMessageBox::StandardButton::Ok);
         else
@@ -43,6 +45,7 @@ void userEditDialog::setUserForEdit(user *u)
     ui->usernameEdit->setText(u->name());
     ui->passwdEdit->setText(u->passwd());
     ui->typeBox->setCurrentIndex(u->type());
+    editMode = true;
 }
 
 void userEditDialog::on_usernameEdit_textChanged(const QString &username)

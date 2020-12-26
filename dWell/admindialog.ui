@@ -50,7 +50,7 @@
             <enum>Qt::NoFocus</enum>
            </property>
            <property name="text">
-            <string>logout</string>
+            <string>выйти</string>
            </property>
            <property name="icon">
             <iconset resource="resources.qrc">
@@ -176,7 +176,7 @@
           <set>QAbstractItemView::NoEditTriggers</set>
          </property>
          <property name="selectionMode">
-          <enum>QAbstractItemView::MultiSelection</enum>
+          <enum>QAbstractItemView::SingleSelection</enum>
          </property>
          <property name="selectionBehavior">
           <enum>QAbstractItemView::SelectRows</enum>

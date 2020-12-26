@@ -31,7 +31,7 @@ void doc::generate(const habitant *h)
     QTextDocument document;
     document.setHtml(html);
 
-    QString filename = QString("dWell_%1_%2_%3").arg(h->fname()).arg(h->lname()).arg(h->studentID());
+    QString filename = QString("dWell_%1_%2_%3").arg((h->fname(), h->lname(), h->studentID()));
     QPdfWriter pdfwriter(QStandardPaths::displayName(QStandardPaths::DocumentsLocation) + filename);
     pdfwriter.setPageSize(QPageSize(QPageSize::A4));
     QPainter painter(&pdfwriter);

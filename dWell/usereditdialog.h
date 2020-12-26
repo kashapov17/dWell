@@ -20,6 +20,7 @@ public:
     void setUserForEdit(user *u);
 
 private:
+    bool editMode;
     ubook *m_ubook;
     user *m_user;
     Ui::userEditDialog *ui;

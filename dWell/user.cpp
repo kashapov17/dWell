@@ -9,8 +9,6 @@ user::user(QString name, QString passwd, utype type)
 
 bool user::setData(QString &name, QString &passwd, utype &type)
 {
-    name = name.trimmed();
-    passwd = passwd.trimmed();
     if (!name.isEmpty() and !passwd.isEmpty() and
             (type == user::ADMIN or type == user::COMMANDANT or type == user::STUDENT))
     {

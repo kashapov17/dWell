@@ -6,6 +6,9 @@
 
 #include <QMessageBox>
 
+#define UNAME_COLUMN 0
+#define HTYPE_COLUMN 1
+
 adminDialog::adminDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::adminDialog)
@@ -14,6 +17,8 @@ adminDialog::adminDialog(QWidget *parent) :
     m_ubook = ubook::getUbook();
 
     connect(m_ubook, &ubook::dataChanged, this, &adminDialog::updateTable);
+    updateTable();
+    ui->tableWidget->verticalHeader()->setVisible(false); // отключаем подпись строк таблицы
     connect(ui->tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged,
             [this]
     {
@@ -21,7 +26,6 @@ adminDialog::adminDialog(QWidget *parent) :
         ui->removeButton->setDisabled(!ui->tableWidget->selectionModel()
                                                          ->hasSelection());
     });
-    updateTable();
 }
 
 adminDialog::~adminDialog()
@@ -36,9 +40,7 @@ void adminDialog::on_addButton_clicked()
     userAddtDlg.setUser(u);
     userAddtDlg.setWindowTitle("Создание пользователя");
     if (userAddtDlg.exec() != userEditDialog::Accepted)
-    {
         return;
-    }
     m_ubook->insert(*u);
 }
 
@@ -66,11 +68,12 @@ void adminDialog::updateTable()
     ui->tableWidget->setRowCount(0);
     for (uint i = 0; i < m_ubook->size(); i++)
     {
-        QTableWidgetItem *username = new QTableWidgetItem((*m_ubook)[i].name());
-        QTableWidgetItem *usertype = new QTableWidgetItem(tools::userTypeToStr((*m_ubook)[i].type()));
+        auto user = (*m_ubook)[i];
+        QTableWidgetItem *username = new QTableWidgetItem(user.name());
+        QTableWidgetItem *usertype = new QTableWidgetItem(tools::userTypeToStr(user.type()));
         ui->tableWidget->insertRow(i);
-        ui->tableWidget->setItem(i, 0, username);
-        ui->tableWidget->setItem(i, 1, usertype);
+        ui->tableWidget->setItem(i, UNAME_COLUMN, username);
+        ui->tableWidget->setItem(i, HTYPE_COLUMN, usertype);
     }
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
 }

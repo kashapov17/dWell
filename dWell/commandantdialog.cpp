@@ -7,6 +7,11 @@
 
 #include <QMessageBox>
 
+#define ROOM_COLUMN 0
+#define SID_COLUMN 1
+#define NAME_COLUMN 2
+#define BDATE_COLUMN 3
+
 commandantDialog::commandantDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::commandantDialog)
@@ -17,6 +22,8 @@ commandantDialog::commandantDialog(QWidget *parent) :
 
     connect(m_rbook, &rbook::dataChanged, this, &commandantDialog::updateTable);
     updateTable();
+
+    ui->tableWidget->verticalHeader()->setVisible(false); // отключаем подпись строк таблицы
 
     connect(ui->tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged,
             [this]
@@ -31,14 +38,11 @@ commandantDialog::commandantDialog(QWidget *parent) :
         // кнопка "выдать справку"
         ui->giveDocButton->setDisabled(!ui->tableWidget->selectionModel()
                                                          ->hasSelection());
-
     });
 }
 
 commandantDialog::~commandantDialog()
-{
-    delete ui;
-}
+{ delete ui; }
 
 void commandantDialog::updateTable()
 {
@@ -47,8 +51,10 @@ void commandantDialog::updateTable()
     for (uint i=0; i < m_rbook->size(); i++)
     {
         auto room = (*m_rbook)[i];
-        for (uint j=0; j < room.size(); j++) {
+        for (uint j=0; j < room.size(); j++)
+        {
             auto habitant = room[j];
+
             QTableWidgetItem *roomNumber = new QTableWidgetItem(QString("%1").arg(habitant.roomNumber()));
             QTableWidgetItem *name = new QTableWidgetItem(QString("%1 %2 %3")
                                                           .arg(habitant.fname(),
@@ -58,10 +64,10 @@ void commandantDialog::updateTable()
             QTableWidgetItem *sid = new QTableWidgetItem(QString("%1").arg(habitant.studentID()));
 
             ui->tableWidget->insertRow (row);
-            ui->tableWidget->setItem(row, 0, roomNumber);
-            ui->tableWidget->setItem(row, 1, sid);
-            ui->tableWidget->setItem(row, 2, name);
-            ui->tableWidget->setItem(row, 3, bdate);
+            ui->tableWidget->setItem(row, ROOM_COLUMN, roomNumber);
+            ui->tableWidget->setItem(row, SID_COLUMN, sid);
+            ui->tableWidget->setItem(row, NAME_COLUMN, name);
+            ui->tableWidget->setItem(row, BDATE_COLUMN, bdate);
             row++;
         }
     }
@@ -72,18 +78,16 @@ void commandantDialog::on_checkinButton_clicked()
 {
     QStringList availRooms;
     for (uint i=0; i < m_rbook->size(); i++)
-    {
         if ((*m_rbook)[i].availableForCheckin())
             availRooms << QString("%1").arg((*m_rbook)[i].number());
-    }
+
     habitantEditDialog habAddtDlg(this, availRooms);
     habitant *h = new habitant;
     habAddtDlg.setHabitant(h);
     habAddtDlg.setWindowTitle("Заселение проживающего");
     if (habAddtDlg.exec() != habitantEditDialog::Accepted)
-    {
         return;
-    }
+
     m_rbook->checkin(h->roomNumber(), h);
 }
 
@@ -95,24 +99,26 @@ void commandantDialog::on_pushButton_clicked()
 void commandantDialog::on_checkoutButton_clicked()
 {
     int row = ui->tableWidget->currentIndex().row();
-    auto room =  ui->tableWidget->item(row, 0)->text().toUInt();
-    auto sid = ui->tableWidget->item(row, 1)->text().toUInt();
+    auto room =  ui->tableWidget->item(row, ROOM_COLUMN)->text().toUInt();
+    auto sid = ui->tableWidget->item(row, SID_COLUMN)->text().toUInt();
     m_rbook->checkout(room, sid);
 }
 
 void commandantDialog::on_relocButton_clicked()
 {
     int row = ui->tableWidget->currentIndex().row();
-    auto curRoom =  ui->tableWidget->item(row, 0)->text().toUInt();
-    auto sid = ui->tableWidget->item(row, 1)->text().toUInt();
+    auto curRoom =  ui->tableWidget->item(row, ROOM_COLUMN)->text().toUInt();
+    auto sid = ui->tableWidget->item(row, SID_COLUMN)->text().toUInt();
 
     QStringList availRooms;
     for (uint i=0; i < m_rbook->size(); i++)
     {
-        if ((*m_rbook)[i].number() == curRoom) // exclude current habitant's room
+        auto room = (*m_rbook)[i];
+
+        if (room.number() == curRoom) // exclude current habitant's room
             continue;
-        if ((*m_rbook)[i].availableForCheckin())
-            availRooms << QString("%1").arg((*m_rbook)[i].number());
+        if (room.availableForCheckin())
+            availRooms << QString("%1").arg(room.number());
     }
 
     if (availRooms.size() == 0)
@@ -139,7 +145,7 @@ void commandantDialog::on_relocButton_clicked()
 void commandantDialog::on_giveDocButton_clicked()
 {
     int row = ui->tableWidget->currentIndex().row();
-    auto sid = ui->tableWidget->item(row, 1)->text().toUInt();
+    auto sid = ui->tableWidget->item(row, SID_COLUMN)->text().toUInt();
     auto h = m_rbook->getHabitantBySid(sid);
     doc::generate(h);
 }
