@@ -28,6 +28,13 @@ uint dormitory::capacity()
     return mDormCapacity;
 }
 
+dormitory *dormitory::getDormCfg()
+{
+    dormitory *d = new dormitory;
+    d->loadFromFile(config::dormConf);
+    return d;
+}
+
 void dormitory::save(QDataStream &ost)
 {
     ost << mDormName << mRoomCapacity << mDormCapacity;

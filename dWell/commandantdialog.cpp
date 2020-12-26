@@ -2,8 +2,8 @@
 #include "ui_commandantdialog.h"
 
 #include "habitanteditdialog.h"
-
 #include "relocationdialog.h"
+#include "doc.h"
 
 #include <QMessageBox>
 
@@ -27,6 +27,9 @@ commandantDialog::commandantDialog(QWidget *parent) :
                                                          ->hasSelection());
         // кнопка "переселить"
         ui->relocButton->setDisabled(!ui->tableWidget->selectionModel()
+                                                         ->hasSelection());
+        // кнопка "выдать справку"
+        ui->giveDocButton->setDisabled(!ui->tableWidget->selectionModel()
                                                          ->hasSelection());
 
     });
@@ -135,5 +138,8 @@ void commandantDialog::on_relocButton_clicked()
 
 void commandantDialog::on_giveDocButton_clicked()
 {
-
+    int row = ui->tableWidget->currentIndex().row();
+    auto sid = ui->tableWidget->item(row, 1)->text().toUInt();
+    auto h = m_rbook->getHabitantBySid(sid);
+    doc::generate(h);
 }

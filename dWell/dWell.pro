@@ -11,6 +11,7 @@ CONFIG += c++11
 SOURCES += \
     admindialog.cpp \
     commandantdialog.cpp \
+    doc.cpp \
     dormitory.cpp \
     habitant.cpp \
     habitanteditdialog.cpp \
@@ -30,6 +31,7 @@ HEADERS += \
     admindialog.h \
     commandantdialog.h \
     config.h \
+    doc.h \
     dormitory.h \
     habitant.h \
     habitanteditdialog.h \
