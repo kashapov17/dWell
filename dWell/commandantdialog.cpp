@@ -40,6 +40,7 @@ commandantDialog::~commandantDialog()
 void commandantDialog::updateTable()
 {
     ui->tableWidget->setRowCount(0);
+    int row =0;
     for (uint i=0; i < m_rbook->size(); i++)
     {
         auto room = (*m_rbook)[i];
@@ -53,11 +54,12 @@ void commandantDialog::updateTable()
             QTableWidgetItem *bdate = new QTableWidgetItem(habitant.birthDate().toString("dd.MM.yyyy"));
             QTableWidgetItem *sid = new QTableWidgetItem(QString("%1").arg(habitant.studentID()));
 
-            ui->tableWidget->insertRow(i);
-            ui->tableWidget->setItem(i, 0, roomNumber);
-            ui->tableWidget->setItem(i, 1, sid);
-            ui->tableWidget->setItem(i, 2, name);
-            ui->tableWidget->setItem(i, 3, bdate);
+            ui->tableWidget->insertRow (row);
+            ui->tableWidget->setItem(row, 0, roomNumber);
+            ui->tableWidget->setItem(row, 1, sid);
+            ui->tableWidget->setItem(row, 2, name);
+            ui->tableWidget->setItem(row, 3, bdate);
+            row++;
         }
     }
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
