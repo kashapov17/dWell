@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>342</width>
-    <height>154</height>
+    <height>204</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -52,7 +52,7 @@
     <string>Переместить в</string>
    </property>
   </widget>
-  <widget class="QComboBox" name="comboBox">
+  <widget class="QComboBox" name="roomNumBox">
    <property name="geometry">
     <rect>
      <x>140</x>
@@ -75,7 +75,66 @@
     <string/>
    </property>
   </widget>
+  <widget class="QPushButton" name="saveButton">
+   <property name="geometry">
+    <rect>
+     <x>240</x>
+     <y>160</y>
+     <width>80</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Сохранить</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="cancelButton">
+   <property name="geometry">
+    <rect>
+     <x>150</x>
+     <y>160</y>
+     <width>80</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Отмена</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>saveButton</sender>
+   <signal>clicked()</signal>
+   <receiver>relocationDialog</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>279</x>
+     <y>171</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>170</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>cancelButton</sender>
+   <signal>clicked()</signal>
+   <receiver>relocationDialog</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>189</x>
+     <y>171</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>170</x>
+     <y>101</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
 </ui>

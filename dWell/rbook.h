@@ -14,8 +14,8 @@ public:
 
     void insert(room &r);
     void erase(const int &idx);
-    void checkin(uint n, habitant *);
-    void checkout(uint n, uint sid);
+    void checkin(uint rn, habitant *);
+    void checkout(uint rn, uint sid);
     const room &operator[](SizeType idx) const {return mRooms[idx];};
     /// Определяет размер коллекции (количество комнат системы).
     SizeType size() const {return mRooms.size();};
@@ -25,6 +25,7 @@ public:
     void loadFromFile(const QString &filename);
 
     static rbook *getRbook();
+    const habitant *getHabitantBySid(uint sid);
 
 
 private:

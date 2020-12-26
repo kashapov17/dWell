@@ -14,7 +14,7 @@ class habitantEditDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit habitantEditDialog(QWidget *parent, QStringList availRooms);
+    habitantEditDialog(QWidget *parent, QStringList availRooms);
     ~habitantEditDialog();
     void setHabitant(habitant *h) {mHabitant = h;};
 

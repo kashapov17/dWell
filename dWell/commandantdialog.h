@@ -27,6 +27,7 @@ private slots:
     void on_pushButton_clicked();
     void on_checkoutButton_clicked();
     void on_relocButton_clicked();
+    void on_giveDocButton_clicked();
 };
 
 #endif // COMMANDANTDIALOG_H

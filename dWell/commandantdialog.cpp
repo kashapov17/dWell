@@ -2,7 +2,8 @@
 #include "ui_commandantdialog.h"
 
 #include "habitanteditdialog.h"
-#include "habitant.h"
+
+#include "relocationdialog.h"
 
 #include <QMessageBox>
 
@@ -14,16 +15,21 @@ commandantDialog::commandantDialog(QWidget *parent) :
     ui->tableWidget->resizeColumnsToContents();
     m_rbook = rbook::getRbook();
 
+    connect(m_rbook, &rbook::dataChanged, this, &commandantDialog::updateTable);
+    updateTable();
+
     connect(ui->tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged,
             [this]
     {
-        // отключаем кнопку "удалить", если нет выделенных пользователей
+        // отключаем кнопку "удалить", если нет выделенных проживающих
+        // или включаем, если они есть
         ui->checkoutButton->setDisabled(!ui->tableWidget->selectionModel()
                                                          ->hasSelection());
-    });
+        // кнопка "переселить"
+        ui->relocButton->setDisabled(!ui->tableWidget->selectionModel()
+                                                         ->hasSelection());
 
-    connect(m_rbook, &rbook::dataChanged, this, &commandantDialog::updateTable);
-    updateTable();
+    });
 }
 
 commandantDialog::~commandantDialog()
@@ -68,7 +74,7 @@ void commandantDialog::on_checkinButton_clicked()
     habitantEditDialog habAddtDlg(this, availRooms);
     habitant *h = new habitant;
     habAddtDlg.setHabitant(h);
-    habAddtDlg.setWindowTitle("Создание пользователя");
+    habAddtDlg.setWindowTitle("Заселение проживающего");
     if (habAddtDlg.exec() != habitantEditDialog::Accepted)
     {
         return;
@@ -110,6 +116,19 @@ void commandantDialog::on_relocButton_clicked()
         return;
     }
 
+    auto oldh = m_rbook->getHabitantBySid(sid);
+    relocationDialog relocDlg(this, availRooms);
+    habitant *newh = new habitant(oldh->getData());
+    relocDlg.setHabitant(newh);
+    relocDlg.setWindowTitle("Переселение проживающего");
+    if (relocDlg.exec() != habitantEditDialog::Accepted)
+    {
+        return;
+    }
+
+    m_rbook->checkin(newh->roomNumber(), newh);
+    m_rbook->checkout(oldh->roomNumber(), oldh->studentID());
+    updateTable();
 }
 
 void commandantDialog::on_giveDocButton_clicked()

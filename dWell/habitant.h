@@ -23,6 +23,7 @@ public:
     habitant();
     habitant(habitantData *hd);
     void setData(habitantData *hd);
+    habitantData *getData() const;
 
     const QString fname() const {return mFname;}
     const QString lname() const {return mLname;}
@@ -32,7 +33,6 @@ public:
     uint numOfCourse() const {return mNumOfCourse;}
     QString group() const {return mGroup;}
     uint roomNumber() const {return mRoomNumber;}
-    void changeRoom(uint n) {mRoomNumber = n;}
 
 private:
     QString mFname;

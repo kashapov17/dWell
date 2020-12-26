@@ -46,6 +46,17 @@ void rbook::checkout(uint roomNumber, uint sid)
     emit dataChanged();
 }
 
+const habitant *rbook::getHabitantBySid(uint sid)
+{
+    for(const auto &it : mRooms)
+    {
+        for (uint i = 0; i < it.size(); i++)
+            if (it[i].studentID() == sid)
+                return &it[i];
+    }
+    return nullptr;
+}
+
 void rbook::save(QDataStream &ost) const
 {
     ost << mRooms.size();
