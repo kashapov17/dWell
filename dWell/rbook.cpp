@@ -9,7 +9,7 @@ rbook::rbook()
     connect(this, &rbook::dataChanged, [this] { saveToFile(config::fileRooms);});
 }
 
-void rbook::touchFile(uint &dormCap, uint roomCap)
+void rbook::touchFile(uint &dormCap, uint &roomCap)
 {
     for (uint i=0; i < dormCap; i++)
     {
@@ -20,6 +20,30 @@ void rbook::touchFile(uint &dormCap, uint roomCap)
         mRooms.push_back(*r);
     }
     saveToFile(config::fileRooms);
+}
+
+QStringList rbook::availRooms() const
+{
+    QStringList rooms;
+    for (const auto &room : qAsConst(mRooms))
+    {
+        if (room.availableForCheckin())
+            rooms << QString("%1").arg(room.number());
+    }
+    return rooms;
+}
+
+QStringList rbook::availRooms(uint &exludeRoomNumber) const
+{
+    QStringList rooms;
+    for (const auto &room : qAsConst(mRooms))
+    {
+        if (room.number() == exludeRoomNumber)
+            continue;
+        if (room.availableForCheckin())
+            rooms << QString("%1").arg(room.number());
+    }
+    return rooms;
 }
 
 void rbook::setCapacity(uint &cap)
@@ -42,13 +66,13 @@ void rbook::checkin(uint roomNumber, habitant *h)
 
 void rbook::checkout(uint roomNumber, uint sid)
 {
-    mRooms[roomNumber-1].checkout(sid);
-    emit dataChanged();
+    if (mRooms[roomNumber-1].checkout(sid))
+        emit dataChanged();
 }
 
-const habitant *rbook::getHabitantBySid(uint sid)
+const habitant *rbook::getHabitantBySid(uint &sid) const
 {
-    for(const auto &it : mRooms)
+    for(const auto &it : qAsConst(mRooms))
     {
         for (uint i = 0; i < it.size(); i++)
             if (it[i].studentID() == sid)
@@ -60,37 +84,26 @@ const habitant *rbook::getHabitantBySid(uint sid)
 void rbook::save(QDataStream &ost) const
 {
     ost << mRooms.size();
-    // Цикл по всем комнатам
     for (const auto &r : mRooms)
     {
-        // Выводим данные комнаты в поток
         ost << r;
-        // Если возникла ошибка, запускаем исключительную ситуацию
         if (ost.status() == QDataStream::WriteFailed)
-        {
             throw std::runtime_error(tr("Write to the stream failed").toStdString());
-        }
     }
 }
 
 void rbook::load(QDataStream &ist)
 {
-    // Очищаем контейнер
     mRooms.clear();
-    // Пока в потоке есть данные
     uint size;
     ist >> size;
     for(uint i=0; i < size; i++)
     {
         room r;
-        // Читаем очередную комнату из потока
         ist >> r;
-        // Если возникла ошибка, запускаем исключительную ситуацию
         if (ist.status() == QDataStream::ReadCorruptData)
-        {
             throw std::runtime_error(tr("Corrupt data were read from the stream").toStdString());
-        }
-        // Вставляем прочитанного пользователя в конец вектора mUsers
+
         mRooms.push_back(r);
     }
 }
@@ -107,11 +120,9 @@ void rbook::saveToFile(const QString &filename) const
 void rbook::loadFromFile(const QString &filename)
 {
     QFile rbookfile(filename);
-    // Открываем файл только для чтения
     if (!rbookfile.open(QIODevice::ReadOnly))
-    {
         throw std::runtime_error((tr("open(): ") + rbookfile.errorString()).toStdString());
-    }
+
     QDataStream ist(&rbookfile);
     load(ist);
     rbookfile.close();

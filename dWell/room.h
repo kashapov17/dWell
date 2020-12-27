@@ -14,7 +14,7 @@ public:
     room();
 
     void checkin(habitant h);
-    void checkout(uint sid);
+    bool checkout(uint sid);
 
     uint number() const {return mNumber;}
     uint capacity() const {return mHabitants.capacity();}

@@ -28,6 +28,7 @@ void doc::generate(const habitant *h)
                 .arg(dorm->name())
                 .arg(h->roomNumber())
                 .arg(QDateTime::currentDateTime().toString());
+
     QTextDocument document;
     document.setHtml(html);
 

@@ -49,13 +49,10 @@ void adminDialog::on_removeButton_clicked()
 {
     QModelIndexList idc = ui->tableWidget->selectionModel()->selectedRows();
     std::set<uint> rows;
-    {
-        // Вставляем номера выбранных строк в rows
-        for (const auto &i : qAsConst(idc))
-        {
-            rows.insert(i.row());
-        }
-    }
+    // Вставляем номера выбранных строк в rows
+    for (const auto &i : qAsConst(idc))
+        rows.insert(i.row());
+
     QString usersToDelete;
 
     // если выбрана одна заметка

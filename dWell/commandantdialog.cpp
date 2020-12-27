@@ -76,19 +76,23 @@ void commandantDialog::updateTable()
 
 void commandantDialog::on_checkinButton_clicked()
 {
-    QStringList availRooms;
-    for (uint i=0; i < m_rbook->size(); i++)
-        if ((*m_rbook)[i].availableForCheckin())
-            availRooms << QString("%1").arg((*m_rbook)[i].number());
+    if (m_rbook->availableForCheckin())
+    {
+        QMessageBox::warning(this, "Ошибка", "Нет доступных мест", QMessageBox::Ok);
+    }
+    else
+        {
+            habitantEditDialog habAddtDlg(this, m_rbook->availRooms());
+            habitant *h = new habitant;
 
-    habitantEditDialog habAddtDlg(this, availRooms);
-    habitant *h = new habitant;
-    habAddtDlg.setHabitant(h);
-    habAddtDlg.setWindowTitle("Заселение проживающего");
-    if (habAddtDlg.exec() != habitantEditDialog::Accepted)
-        return;
+            habAddtDlg.setHabitant(h);
+            habAddtDlg.setWindowTitle("Заселение проживающего");
 
-    m_rbook->checkin(h->roomNumber(), h);
+            if (habAddtDlg.exec() != habitantEditDialog::Accepted)
+                return;
+
+            m_rbook->checkin(h->roomNumber(), h);
+        }
 }
 
 void commandantDialog::on_pushButton_clicked()
@@ -110,36 +114,25 @@ void commandantDialog::on_relocButton_clicked()
     auto curRoom =  ui->tableWidget->item(row, ROOM_COLUMN)->text().toUInt();
     auto sid = ui->tableWidget->item(row, SID_COLUMN)->text().toUInt();
 
-    QStringList availRooms;
-    for (uint i=0; i < m_rbook->size(); i++)
-    {
-        auto room = (*m_rbook)[i];
-
-        if (room.number() == curRoom) // exclude current habitant's room
-            continue;
-        if (room.availableForCheckin())
-            availRooms << QString("%1").arg(room.number());
-    }
-
-    if (availRooms.size() == 0)
+    if (m_rbook->availableForCheckin())
     {
         QMessageBox::warning(this, "Ошибка", "Нет доступных мест", QMessageBox::Ok);
-        return;
     }
+    else
+        {
+            auto oldh = m_rbook->getHabitantBySid(sid);
+            relocationDialog relocDlg(this, m_rbook->availRooms(curRoom));
+            habitant *newh = new habitant(oldh->getData());
+            relocDlg.setHabitant(newh);
+            relocDlg.setWindowTitle("Переселение проживающего");
+            if (relocDlg.exec() != habitantEditDialog::Accepted)
+            {
+                return;
+            }
 
-    auto oldh = m_rbook->getHabitantBySid(sid);
-    relocationDialog relocDlg(this, availRooms);
-    habitant *newh = new habitant(oldh->getData());
-    relocDlg.setHabitant(newh);
-    relocDlg.setWindowTitle("Переселение проживающего");
-    if (relocDlg.exec() != habitantEditDialog::Accepted)
-    {
-        return;
-    }
-
-    m_rbook->checkin(newh->roomNumber(), newh);
-    m_rbook->checkout(oldh->roomNumber(), oldh->studentID());
-    updateTable();
+            m_rbook->checkin(newh->roomNumber(), newh);
+            m_rbook->checkout(oldh->roomNumber(), oldh->studentID());
+        }
 }
 
 void commandantDialog::on_giveDocButton_clicked()

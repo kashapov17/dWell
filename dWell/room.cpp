@@ -12,11 +12,15 @@ void room::checkin(habitant h)
     mHabitants.push_back(h);
 }
 
-void room::checkout(uint sid)
+bool room::checkout(uint sid)
 {
     auto it = findBySid(sid);
     if (it != mHabitants.end())
-        mHabitants.erase(findBySid(sid));
+    {
+        mHabitants.erase(it);
+        return true;
+    }
+    return false;
 }
 
 QVector<habitant>::iterator room::findBySid(uint sid)

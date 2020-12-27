@@ -20,14 +20,7 @@ public:
     bool insert(user &user);
     bool erase(const uint &idx);
 
-    void loadFromFile(const QString &filename);
-    /**
-     * @brief Оператор [].
-     * @param idx Индекс читаемого элемента.
-     * @return Константная ссылка на пользователя.
-     */
     const user &operator[](SizeType idx) const {return mUsers[idx];};
-    /// Определяет размер коллекции (количество пользователей системы).
     SizeType size() const {return mUsers.size();};
     static ubook *getUbook();
 
@@ -41,6 +34,7 @@ private:
 
 private slots:
     void saveToFile(const QString &filename) const;
+    void loadFromFile(const QString &filename);
 
 };
 
