@@ -3,7 +3,12 @@
 
 #include <QFile>
 
-ubook::ubook()
+ubook::ubook(const ubook &other) : QObject(other.parent())
+{
+    mUsers = other.mUsers;
+}
+
+ubook::ubook(QObject *parent) : QObject(parent)
 {
     QObject::connect(this, &ubook::dataChanged, [this] { saveToFile(config::fileUsers);});
 }
@@ -52,6 +57,11 @@ ubook *ubook::getUbook()
     ubook *u = new ubook;
     u->loadFromFile(config::fileUsers);
     return u;
+}
+
+void ubook::touchFile()
+{
+    saveToFile(config::fileUsers);
 }
 
 bool ubook::erase(const uint &idx)

@@ -11,7 +11,8 @@ class ubook : public QObject
     Q_OBJECT
 
 public:
-    ubook();
+    ubook(QObject *parent = nullptr);
+    ubook(const ubook &other);
 
     user::utype findUser(const QString &name, const QString &passwd) const;
     user::utype findUserByName(const QString &name) const;
@@ -22,6 +23,7 @@ public:
     const user &operator[](uint idx) const;
     uint size() const;
     static ubook *getUbook();
+    void touchFile(); // for initial setup
 
 signals:
     void dataChanged();

@@ -5,7 +5,8 @@
 #include <iterator>
 
 room::room()
-{}
+{
+}
 
 uint room::number() const
 {
@@ -49,7 +50,7 @@ void room::clear()
 
 bool room::isEmpty() const
 {
-    return static_cast<bool>(size());
+    return !static_cast<bool>(mHabitants.size());
 }
 
 bool room::availableForCheckin() const

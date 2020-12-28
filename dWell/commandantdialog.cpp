@@ -11,6 +11,7 @@
 #include <QPrintDialog>
 #include <QStandardPaths>
 #include <QTextDocument>
+#include <QFileInfo>
 
 #define ROOM_COLUMN 0
 #define SID_COLUMN 1
@@ -147,13 +148,18 @@ void commandantDialog::on_giveDocButton_clicked()
     auto h = m_rbook->getHabitantBySid(sid);
 
     QString filename = QString("dWell_%1_%2_%3").arg(h->fname()).arg(h->lname()).arg(h->studentID());
+    if(QFileInfo(filename).suffix().isEmpty())
+                filename.append(".pdf");
+
     auto path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
     QPrinter printer(QPrinter::PrinterResolution);
     printer.setOutputFormat(QPrinter::PdfFormat);
     printer.setOutputFileName(path + "/" + filename);
 
-    QPrintDialog print_dialog(&printer,this);
-    print_dialog.exec();
+    QPrintDialog printDlg(&printer,this);
+    printDlg.setWindowTitle("Печать справки");
+    if (printDlg.exec() != QPrintDialog::Accepted)
+        return;
 
     doc::generate(h, &printer);
 }
