@@ -24,6 +24,14 @@ uint rbook::size() const
     return mRooms.size();
 }
 
+uint rbook::fullness() const
+{
+    uint count=0;
+    for (const auto &room : mRooms)
+        count += room.size();
+    return count;
+}
+
 void rbook::touchFile(uint &dormCap, uint &roomCap)
 {
     for (uint i=0; i < dormCap; i++)

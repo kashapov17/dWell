@@ -10,9 +10,7 @@
 #include <QMessageBox>
 
 tools::tools()
-{
-
-}
+{}
 
 QString tools::userTypeToStr(const user::utype &t)
 {

@@ -26,6 +26,8 @@ commandantDialog::commandantDialog(QWidget *parent) :
     m_rbook = rbook::getRbook();
 
     connect(m_rbook, &rbook::dataChanged, this, &commandantDialog::updateTable);
+    connect(m_rbook, &rbook::dataChanged, this, &commandantDialog::updateSumLabel);
+    updateSumLabel();
     updateTable();
 
     ui->tableWidget->resizeColumnsToContents();
@@ -66,6 +68,7 @@ void commandantDialog::updateTable()
                                                           .arg(habitant.fname(),
                                                                habitant.lname(),
                                                                habitant.patronymic()));
+
             QTableWidgetItem *bdate = new QTableWidgetItem(habitant.birthDate().toString("dd.MM.yyyy"));
             QTableWidgetItem *sid = new QTableWidgetItem(QString("%1").arg(habitant.studentID()));
 
@@ -78,6 +81,14 @@ void commandantDialog::updateTable()
         }
     }
     ui->tableWidget->horizontalHeader()->setSectionResizeMode(QHeaderView::ResizeMode::ResizeToContents);
+}
+
+void commandantDialog::updateSumLabel()
+{
+    dormitory *d = dormitory::getDormCfg();
+    ui->label->setText(QString("Заполненность: %1 из %2")
+                       .arg(m_rbook->fullness())
+                       .arg((d->roomCapacity()*d->capacity())));
 }
 
 void commandantDialog::on_checkinButton_clicked()
@@ -108,6 +119,11 @@ void commandantDialog::on_pushButton_clicked()
 
 void commandantDialog::on_checkoutButton_clicked()
 {
+
+    QMessageBox::StandardButtons ret = QMessageBox::question(this, "Удаление пользователя", "Вы действительно хотите выселить?",
+                                                             QMessageBox::No | QMessageBox::Yes);
+    if (ret == QMessageBox::No) return;
+
     int row = ui->tableWidget->currentIndex().row();
     auto room =  ui->tableWidget->item(row, ROOM_COLUMN)->text().toUInt();
     auto sid = ui->tableWidget->item(row, SID_COLUMN)->text().toUInt();

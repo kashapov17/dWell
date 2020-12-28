@@ -24,6 +24,7 @@ private:
 
 private slots:
     void updateTable();
+    void updateSumLabel();
     void on_checkinButton_clicked();
     void on_pushButton_clicked();
     void on_checkoutButton_clicked();

@@ -16,6 +16,7 @@ public:
     void checkout(uint rn, uint sid);
     const room &operator[](uint &idx) const;
     uint size() const;
+    uint fullness() const;
     void setCapacity(uint &cap);
     static rbook *getRbook();
     const habitant *getHabitantBySid(uint &sid) const;
