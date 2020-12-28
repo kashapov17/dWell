@@ -4,8 +4,13 @@
 #include "habitanteditdialog.h"
 #include "relocationdialog.h"
 #include "doc.h"
+#include "dormitory.h"
 
 #include <QMessageBox>
+#include <QPrinter>
+#include <QPrintDialog>
+#include <QStandardPaths>
+#include <QTextDocument>
 
 #define ROOM_COLUMN 0
 #define SID_COLUMN 1
@@ -76,7 +81,7 @@ void commandantDialog::updateTable()
 
 void commandantDialog::on_checkinButton_clicked()
 {
-    if (m_rbook->availableForCheckin())
+    if (!m_rbook->availableForCheckin())
     {
         QMessageBox::warning(this, "Ошибка", "Нет доступных мест", QMessageBox::Ok);
     }
@@ -114,7 +119,7 @@ void commandantDialog::on_relocButton_clicked()
     auto curRoom =  ui->tableWidget->item(row, ROOM_COLUMN)->text().toUInt();
     auto sid = ui->tableWidget->item(row, SID_COLUMN)->text().toUInt();
 
-    if (m_rbook->availableForCheckin())
+    if (!m_rbook->availableForCheckin())
     {
         QMessageBox::warning(this, "Ошибка", "Нет доступных мест", QMessageBox::Ok);
     }
@@ -140,5 +145,15 @@ void commandantDialog::on_giveDocButton_clicked()
     int row = ui->tableWidget->currentIndex().row();
     auto sid = ui->tableWidget->item(row, SID_COLUMN)->text().toUInt();
     auto h = m_rbook->getHabitantBySid(sid);
-    doc::generate(h);
+
+    QString filename = QString("dWell_%1_%2_%3").arg(h->fname()).arg(h->lname()).arg(h->studentID());
+    auto path = QStandardPaths::writableLocation(QStandardPaths::DocumentsLocation);
+    QPrinter printer(QPrinter::PrinterResolution);
+    printer.setOutputFormat(QPrinter::PdfFormat);
+    printer.setOutputFileName(path + "/" + filename);
+
+    QPrintDialog print_dialog(&printer,this);
+    print_dialog.exec();
+
+    doc::generate(h, &printer);
 }
