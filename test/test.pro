@@ -8,8 +8,11 @@ TEMPLATE = app
 
 HEADERS +=  ../dWell/user.h \
             ../dWell/ubook.h \
+            ../dWell/room.h \
+            ../dWell/habitant.h
 
-SOURCES +=  tst_testuser.cpp \
-            tst_testubook.cpp \
+SOURCES +=  tst_testdwell.cpp \
             ../dWell/user.cpp \
             ../dWell/ubook.cpp \
+            ../dWell/room.cpp \
+            ../dWell/habitant.cpp
