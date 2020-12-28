@@ -11,9 +11,9 @@ public:
     enum utype {ADMIN, COMMANDANT, STUDENT, UNKNOWN};
     user();
     user(QString, QString, utype);
-    const QString name() const {return mName;};
-    const QString passwd() const {return mPasswd;};
-    utype type() const {return mType;};
+    const QString name() const;
+    const QString passwd() const;
+    utype type() const;
     bool setData(QString &, QString &, utype &);
 
 private:
@@ -22,14 +22,12 @@ private:
     utype mType;
 };
 
-// Запись пользователя в поток
 inline QDataStream &operator<< (QDataStream &ost, const user &user)
 {
     ost << user.name() << user.passwd() << user.type();
     return ost;
 }
 
-// Считывание пользователя из потока
 inline QDataStream &operator>> (QDataStream &ist, user &user)
 {
     QString name;

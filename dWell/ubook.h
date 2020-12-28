@@ -11,7 +11,6 @@ class ubook : public QObject
     Q_OBJECT
 
 public:
-    using SizeType = uint;
     ubook();
 
     user::utype findUser(const QString &name, const QString &passwd) const;
@@ -20,8 +19,8 @@ public:
     bool insert(user &user);
     bool erase(const uint &idx);
 
-    const user &operator[](SizeType idx) const {return mUsers[idx];};
-    SizeType size() const {return mUsers.size();};
+    const user &operator[](uint idx) const;
+    uint size() const;
     static ubook *getUbook();
 
 signals:

@@ -9,6 +9,21 @@ rbook::rbook()
     connect(this, &rbook::dataChanged, [this] { saveToFile(config::fileRooms);});
 }
 
+bool rbook::availableForCheckin() const
+{
+    return !availRooms().empty();
+}
+
+const room &rbook::operator[](uint &idx) const
+{
+    return mRooms[idx];
+}
+
+uint rbook::size() const
+{
+    return mRooms.size();
+}
+
 void rbook::touchFile(uint &dormCap, uint &roomCap)
 {
     for (uint i=0; i < dormCap; i++)

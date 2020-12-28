@@ -2,6 +2,21 @@
 
 user::user() {}
 
+const QString user::name() const
+{
+    return mName;
+}
+
+const QString user::passwd() const
+{
+    return mPasswd;
+}
+
+user::utype user::type() const
+{
+    return mType;
+}
+
 user::user(QString name, QString passwd, utype type)
 {
     setData(name, passwd, type);

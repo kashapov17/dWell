@@ -8,6 +8,16 @@ ubook::ubook()
     QObject::connect(this, &ubook::dataChanged, [this] { saveToFile(config::fileUsers);});
 }
 
+const user &ubook::operator[](uint idx) const
+{
+    return mUsers[idx];
+}
+
+uint ubook::size() const
+{
+    return mUsers.size();
+}
+
 user::utype ubook::findUser(const QString &name, const QString &passwd) const
 {
     for (const auto &it : mUsers)

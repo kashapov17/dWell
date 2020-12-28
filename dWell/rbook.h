@@ -14,19 +14,14 @@ public:
 
     void checkin(uint rn, habitant *);
     void checkout(uint rn, uint sid);
-    const room &operator[](uint &idx) const {return mRooms[idx];}
-
-    /// Определяет размер коллекции (количество комнат системы).
-    uint size() const {return mRooms.size();}
+    const room &operator[](uint &idx) const;
+    uint size() const;
     void setCapacity(uint &cap);
-
     static rbook *getRbook();
     const habitant *getHabitantBySid(uint &sid) const;
-
     QStringList availRooms() const;
     QStringList availRooms(uint &exludeRoomNumber) const;
-    bool availableForCheckin() const {return !availRooms().empty();}
-
+    bool availableForCheckin() const;
     void touchFile(uint &dormCap, uint &roomCap); // for initial setup
 
 private:

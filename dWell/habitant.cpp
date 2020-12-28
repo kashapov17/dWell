@@ -3,6 +3,46 @@
 habitant::habitant()
 {}
 
+const QString habitant::fname() const
+{
+    return mFname;
+}
+
+const QString habitant::lname() const
+{
+    return mLname;
+}
+
+const QString habitant::patronymic() const
+{
+    return mPatronymic;
+}
+
+const QDate habitant::birthDate() const
+{
+    return mBirthDate;
+}
+
+uint habitant::studentID() const
+{
+    return mStudentID;
+}
+
+uint habitant::numOfCourse() const
+{
+    return mNumOfCourse;
+}
+
+QString habitant::group() const
+{
+    return mGroup;
+}
+
+uint habitant::roomNumber() const
+{
+    return mRoomNumber;
+}
+
 habitant::habitant(habitantData *h)
 {
     setData(h);

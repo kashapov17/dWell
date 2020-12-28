@@ -26,14 +26,14 @@ public:
     bool setData(habitantData *hd);
     habitantData *getData() const;
 
-    const QString fname() const {return mFname;}
-    const QString lname() const {return mLname;}
-    const QString patronymic() const {return mPatronymic;}
-    const QDate birthDate() const {return mBirthDate;}
-    uint studentID() const {return mStudentID;}
-    uint numOfCourse() const {return mNumOfCourse;}
-    QString group() const {return mGroup;}
-    uint roomNumber() const {return mRoomNumber;}
+    const QString fname() const;
+    const QString lname() const;
+    const QString patronymic() const;
+    const QDate birthDate() const;
+    uint studentID() const;
+    uint numOfCourse() const;
+    QString group() const;
+    uint roomNumber() const;
 
 private:
     QString mFname;
@@ -46,7 +46,6 @@ private:
     uint mRoomNumber;
 };
 
-// Запись проживающего в поток
 inline QDataStream &operator<< (QDataStream &ost, const habitant &h)
 {
     ost << h.group() << h.roomNumber() << h.fname() << h.lname() << h.patronymic() << h.birthDate()
@@ -54,7 +53,6 @@ inline QDataStream &operator<< (QDataStream &ost, const habitant &h)
     return ost;
 }
 
-// Считывание проживающего из потока
 inline QDataStream &operator>> (QDataStream &ist, habitant &h)
 {
     habitant::habitantData hd;
