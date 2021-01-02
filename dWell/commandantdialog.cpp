@@ -25,8 +25,6 @@ commandantDialog::commandantDialog(QWidget *parent) :
     ui->setupUi(this);
     m_rbook = rbook::getRbook();
 
-    connect(m_rbook, &rbook::dataChanged, this, &commandantDialog::updateTable);
-    connect(m_rbook, &rbook::dataChanged, this, &commandantDialog::updateSumLabel);
     updateSumLabel();
     updateTable();
 
@@ -110,6 +108,8 @@ void commandantDialog::on_checkinButton_clicked()
 
             m_rbook->checkin(h->roomNumber(), h);
         }
+    updateSumLabel();
+    updateTable();
 }
 
 void commandantDialog::on_pushButton_clicked()
@@ -120,7 +120,9 @@ void commandantDialog::on_pushButton_clicked()
 void commandantDialog::on_checkoutButton_clicked()
 {
 
-    QMessageBox::StandardButtons ret = QMessageBox::question(this, "Удаление пользователя", "Вы действительно хотите выселить?",
+    QMessageBox::StandardButtons ret = QMessageBox::question(this,
+                                                             "Удаление пользователя",
+                                                             "Вы действительно хотите выселить?",
                                                              QMessageBox::No | QMessageBox::Yes);
     if (ret == QMessageBox::No) return;
 
@@ -128,6 +130,8 @@ void commandantDialog::on_checkoutButton_clicked()
     auto room =  ui->tableWidget->item(row, ROOM_COLUMN)->text().toUInt();
     auto sid = ui->tableWidget->item(row, SID_COLUMN)->text().toUInt();
     m_rbook->checkout(room, sid);
+    updateSumLabel();
+    updateTable();
 }
 
 void commandantDialog::on_relocButton_clicked()
@@ -155,6 +159,7 @@ void commandantDialog::on_relocButton_clicked()
             m_rbook->checkin(newh->roomNumber(), newh);
             m_rbook->checkout(oldh->roomNumber(), oldh->studentID());
         }
+    updateTable();
 }
 
 void commandantDialog::on_giveDocButton_clicked()

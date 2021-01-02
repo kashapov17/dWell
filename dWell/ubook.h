@@ -1,42 +1,22 @@
 #ifndef UBOOK_H
 #define UBOOK_H
 
-#include <QVector>
-#include <QObject>
-
+#include "book.h"
 #include "user.h"
 
-class ubook : public QObject
+#include <QVector>
+
+class ubook : public book<user>
 {
-    Q_OBJECT
-
 public:
-    ubook(QObject *parent = nullptr);
-    ubook(const ubook &other);
-
+    ubook() {}
     user::utype findUser(const QString &name, const QString &passwd) const;
     user::utype findUserByName(const QString &name) const;
 
     bool insert(user &user);
-    bool erase(const uint &idx);
-
-    const user &operator[](uint idx) const;
-    uint size() const;
+    bool remove(const uint &idx);
     static ubook *getUbook();
     void touchFile(); // for initial setup
-
-signals:
-    void dataChanged();
-
-private:
-    QVector<user> mUsers;
-    void save(QDataStream &ost) const;
-    void load(QDataStream &ist);
-
-private slots:
-    void saveToFile(const QString &filename) const;
-    void loadFromFile(const QString &filename);
-
 };
 
 #endif // UBOOK_H

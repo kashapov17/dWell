@@ -4,18 +4,16 @@
 #include <QVector>
 
 #include "room.h"
+#include "book.h"
 
-class rbook : public QObject
+class rbook : public book<room>
 {
-    Q_OBJECT
-
 public:
-    rbook();
+    rbook() {}
 
     void checkin(uint rn, habitant *);
     void checkout(uint rn, uint sid);
-    const room &operator[](uint &idx) const;
-    uint size() const;
+
     uint fullness() const;
     void setCapacity(uint &cap);
     static rbook *getRbook();
@@ -24,18 +22,6 @@ public:
     QStringList availRooms(uint &exludeRoomNumber) const;
     bool availableForCheckin() const;
     void touchFile(uint &dormCap, uint &roomCap); // for initial setup
-
-private:
-    QVector<room> mRooms;
-    void save(QDataStream &ost) const;
-    void load(QDataStream &ist);
-
-private slots:
-    void loadFromFile(const QString &filename);
-    void saveToFile(const QString &filename) const;
-
-signals:
-    void dataChanged();
 };
 
 #endif // RBOOK_H

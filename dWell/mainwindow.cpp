@@ -84,5 +84,5 @@ void MainWindow::on_loginButton_clicked()
     }
     ui->usernameEdit->clear();
     ui->passwdEdit->clear();
-    delete usersbook;
+    //delete usersbook;
 }

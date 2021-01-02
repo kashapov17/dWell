@@ -1,6 +1,6 @@
 #include "user.h"
 
-user::user() {}
+user::user(QString name, QString passwd, utype type) : mName(name), mPasswd(passwd), mType(type) {}
 
 const QString user::name() const
 {
@@ -17,11 +17,6 @@ user::utype user::type() const
     return mType;
 }
 
-user::user(QString name, QString passwd, utype type)
-{
-    setData(name, passwd, type);
-}
-
 bool user::setData(QString &name, QString &passwd, utype &type)
 {
     name = name.trimmed();
@@ -35,4 +30,14 @@ bool user::setData(QString &name, QString &passwd, utype &type)
         return true;
     }
     return false;
+}
+
+void user::write(QDataStream &ost) const
+{
+    ost << mName << mPasswd << mType;
+}
+
+void user::read(QDataStream &ist)
+{
+    ist >> mName >> mPasswd >> mType;
 }

@@ -9,15 +9,9 @@
 
 initSetupDialog::initSetupDialog(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::initSetupDialog)
-{
-    ui->setupUi(this);
-}
+    ui(new Ui::initSetupDialog) {ui->setupUi(this);}
 
-initSetupDialog::~initSetupDialog()
-{
-    delete ui;
-}
+initSetupDialog::~initSetupDialog() {delete ui;}
 
 void initSetupDialog::accept()
 {
@@ -41,7 +35,10 @@ void initSetupDialog::accept()
         return;
     }
 
-    user admin(adminName, adminPasswd, user::utype::ADMIN);
+    //user admin(adminName, adminPasswd, user::utype::ADMIN);
+    user admin;
+    user::utype t = user::utype::ADMIN;
+    admin.setData(adminName, adminPasswd, t);
     ubook usersbook;
     usersbook.insert(admin);
 

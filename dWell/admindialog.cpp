@@ -3,6 +3,7 @@
 
 #include "usereditdialog.h"
 #include "tools.h"
+#include "config.h"
 
 #include <QMessageBox>
 #include <set>
@@ -17,7 +18,6 @@ adminDialog::adminDialog(QWidget *parent) :
     ui->setupUi(this);
     m_ubook = ubook::getUbook();
 
-    connect(m_ubook, &ubook::dataChanged, this, &adminDialog::updateTable);
     updateTable();
     ui->tableWidget->verticalHeader()->setVisible(false); // отключаем подпись строк таблицы
     connect(ui->tableWidget->selectionModel(), &QItemSelectionModel::selectionChanged,
@@ -43,6 +43,7 @@ void adminDialog::on_addButton_clicked()
     if (userAddtDlg.exec() != userEditDialog::Accepted)
         return;
     m_ubook->insert(*u);
+    updateTable();
 }
 
 void adminDialog::on_removeButton_clicked()
@@ -71,7 +72,8 @@ void adminDialog::on_removeButton_clicked()
     if (ret == QMessageBox::No) return;
 
     for (auto it = rows.rbegin(); it != rows.rend(); ++it)
-        m_ubook->erase(*it);
+        m_ubook->remove(*it);
+    updateTable();
 }
 
 void adminDialog::on_tableWidget_doubleClicked(const QModelIndex &index)
@@ -81,7 +83,8 @@ void adminDialog::on_tableWidget_doubleClicked(const QModelIndex &index)
     userEditDlg.setUserForEdit(u);
     userEditDlg.setWindowTitle("Редактирование пользователя");
     if (userEditDlg.exec() != userEditDialog::Accepted) return;
-    emit m_ubook->dataChanged();
+    m_ubook->saveToFile(config::fileUsers);
+    updateTable();
 }
 
 void adminDialog::updateTable()

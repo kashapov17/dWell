@@ -13,10 +13,7 @@ habitantEditDialog::habitantEditDialog(QWidget *parent, QStringList availRooms) 
     ui->roomNumBox->addItems(availRooms);
 }
 
-habitantEditDialog::~habitantEditDialog()
-{
-    delete ui;
-}
+habitantEditDialog::~habitantEditDialog() {delete ui;}
 
 void habitantEditDialog::accept()
 {

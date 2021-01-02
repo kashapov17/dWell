@@ -1,16 +1,16 @@
 #ifndef USER_H
 #define USER_H
 
+#include "bookentry.h"
+
 #include <QString>
-#include <QDataStream>
 
-class user
+class user : public bookEntry
 {
-
 public:
     enum utype {ADMIN, COMMANDANT, STUDENT, UNKNOWN};
-    user();
-    user(QString, QString, utype);
+    user() {}
+    user(QString name, QString pass, utype type);
     const QString name() const;
     const QString passwd() const;
     utype type() const;
@@ -20,22 +20,10 @@ private:
     QString mName;
     QString mPasswd;
     utype mType;
+
+protected:
+    void write(QDataStream &ost) const override;
+    void read(QDataStream &ist) override;
 };
-
-inline QDataStream &operator<< (QDataStream &ost, const user &user)
-{
-    ost << user.name() << user.passwd() << user.type();
-    return ost;
-}
-
-inline QDataStream &operator>> (QDataStream &ist, user &user)
-{
-    QString name;
-    QString password;
-    user::utype type;
-    ist >> name >> password >> type;
-    user.setData(name, password, type);
-    return ist;
-}
 
 #endif // USER_H

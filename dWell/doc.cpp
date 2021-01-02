@@ -4,10 +4,6 @@
 #include <QStandardPaths>
 #include <QTextDocument>
 
-doc::doc()
-{
-}
-
 void doc::generate(const habitant *h, QPrinter *printer)
 {
     dormitory *dorm = dormitory::getDormCfg();

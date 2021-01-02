@@ -8,7 +8,4 @@ studentDialog::studentDialog(QWidget *parent) :
     ui->setupUi(this);
 }
 
-studentDialog::~studentDialog()
-{
-    delete ui;
-}
+studentDialog::~studentDialog() {delete ui;}

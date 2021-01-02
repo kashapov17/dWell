@@ -3,29 +3,9 @@
 
 #include <QFile>
 
-ubook::ubook(const ubook &other) : QObject(other.parent())
-{
-    mUsers = other.mUsers;
-}
-
-ubook::ubook(QObject *parent) : QObject(parent)
-{
-    QObject::connect(this, &ubook::dataChanged, [this] { saveToFile(config::fileUsers);});
-}
-
-const user &ubook::operator[](uint idx) const
-{
-    return mUsers[idx];
-}
-
-uint ubook::size() const
-{
-    return mUsers.size();
-}
-
 user::utype ubook::findUser(const QString &name, const QString &passwd) const
 {
-    for (const auto &it : mUsers)
+    for (const auto &it : mEntries)
         if (it.name() == name.trimmed() and it.passwd() == passwd.trimmed())
             return it.type();
 
@@ -34,7 +14,7 @@ user::utype ubook::findUser(const QString &name, const QString &passwd) const
 
 user::utype ubook::findUserByName(const QString &name) const
 {
-     for (const auto &it : mUsers)
+     for (const auto &it : mEntries)
          if(it.name() == name.trimmed())
              return it.type();
 
@@ -45,8 +25,19 @@ bool ubook::insert(user &user)
 {
     if (findUser(user.name(), user.passwd()) == user::UNKNOWN)
     {
-        mUsers.push_back(user);
-        emit dataChanged();
+        mEntries.push_back(std::move(user));
+        saveToFile(config::fileUsers);
+        return true;
+    }
+    return false;
+}
+
+bool ubook::remove(const uint &idx)
+{
+    if (idx <= uint(mEntries.size()))
+    {
+        mEntries.erase(std::next(mEntries.begin(), idx));
+        saveToFile(config::fileUsers);
         return true;
     }
     return false;
@@ -62,58 +53,4 @@ ubook *ubook::getUbook()
 void ubook::touchFile()
 {
     saveToFile(config::fileUsers);
-}
-
-bool ubook::erase(const uint &idx)
-{
-    if (idx < size())
-    {
-        mUsers.erase(std::next(mUsers.begin(), idx));
-        emit dataChanged();
-        return true;
-    }
-    return false;
-}
-
-void ubook::save(QDataStream &ost) const
-{
-    for (const auto &u : mUsers)
-    {
-        ost << u;
-        if (ost.status() == QDataStream::WriteFailed)
-            throw std::runtime_error(QString("Write to the stream failed").toStdString());
-    }
-}
-
-void ubook::saveToFile(const QString &filename) const
-{
-    QFile ubookfile(filename);
-    ubookfile.open(QIODevice::WriteOnly);
-    QDataStream ost(&ubookfile);
-    save(ost);
-}
-
-void ubook::loadFromFile(const QString &filename)
-{
-    QFile ubookfile(filename);
-
-    if (!ubookfile.open(QIODevice::ReadOnly))
-        throw std::runtime_error((QString("open(): ") + ubookfile.errorString()).toStdString());
-
-    QDataStream ist(&ubookfile);
-    load(ist);
-}
-
-void ubook::load(QDataStream &ist)
-{
-    mUsers.clear();
-    while (!ist.atEnd())
-    {
-        user u;
-        ist >> u;
-        if (ist.status() == QDataStream::ReadCorruptData)
-            throw std::runtime_error(QString("Corrupt data were read from the stream").toStdString());
-        else
-            mUsers.push_back(u);
-    }
 }

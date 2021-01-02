@@ -21,7 +21,7 @@ public:
         uint roomNumber;
     };
 
-    habitant();
+    habitant() {}
     habitant(habitantData *hd);
     bool setData(habitantData *hd);
     habitantData *getData() const;

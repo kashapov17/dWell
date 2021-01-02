@@ -7,9 +7,8 @@
 
 class doc
 {
-
 public:
-    doc();
+    doc() {}
     static void generate(const habitant *h, QPrinter *printer);
 };
 

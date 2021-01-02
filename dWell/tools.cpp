@@ -9,9 +9,6 @@
 #include <QFile>
 #include <QMessageBox>
 
-tools::tools()
-{}
-
 QString tools::userTypeToStr(const user::utype &t)
 {
     switch (t)

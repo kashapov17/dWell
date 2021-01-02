@@ -11,8 +11,6 @@ dormitory::dormitory(QString &name, uint &roomCapacity, uint &dormCapacity)
     saveToFile(config::dormConf);
 }
 
-dormitory::dormitory() {}
-
 const QString dormitory::name()
 {
     return mDormName;

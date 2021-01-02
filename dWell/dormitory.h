@@ -9,7 +9,7 @@ class dormitory
 {
 
 public:
-    dormitory();
+    dormitory() {}
     dormitory(QString &name, uint &roomCapacity, uint &dormCapacity);
     const QString name();
     uint roomCapacity();

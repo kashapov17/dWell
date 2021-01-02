@@ -9,7 +9,7 @@
 class tools
 {
 public:
-    tools();
+    tools() {}
     static QString userTypeToStr(const user::utype &);
     static void initSystem(QWidget *);
     static QDialog *getUserInterface(QWidget *, const user::utype &);

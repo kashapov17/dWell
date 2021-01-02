@@ -4,30 +4,12 @@
 #include <QFile>
 #include <QDataStream>
 
-rbook::rbook()
-{
-    connect(this, &rbook::dataChanged, [this] { saveToFile(config::fileRooms);});
-}
-
-bool rbook::availableForCheckin() const
-{
-    return !availRooms().empty();
-}
-
-const room &rbook::operator[](uint &idx) const
-{
-    return mRooms[idx];
-}
-
-uint rbook::size() const
-{
-    return mRooms.size();
-}
+bool rbook::availableForCheckin() const {return !availRooms().empty();}
 
 uint rbook::fullness() const
 {
     uint count=0;
-    for (const auto &room : mRooms)
+    for (const auto &room : mEntries)
         count += room.size();
     return count;
 }
@@ -40,7 +22,7 @@ void rbook::touchFile(uint &dormCap, uint &roomCap)
         r->setCapacity(roomCap);
         uint n = i+1;
         r->setNumber(n);
-        mRooms.push_back(*r);
+        mEntries.push_back(*r);
     }
     saveToFile(config::fileRooms);
 }
@@ -48,7 +30,7 @@ void rbook::touchFile(uint &dormCap, uint &roomCap)
 QStringList rbook::availRooms() const
 {
     QStringList rooms;
-    for (const auto &room : qAsConst(mRooms))
+    for (const auto &room : qAsConst(mEntries))
     {
         if (room.availableForCheckin())
             rooms << QString("%1").arg(room.number());
@@ -59,7 +41,7 @@ QStringList rbook::availRooms() const
 QStringList rbook::availRooms(uint &exludeRoomNumber) const
 {
     QStringList rooms;
-    for (const auto &room : qAsConst(mRooms))
+    for (const auto &room : qAsConst(mEntries))
     {
         if (room.number() == exludeRoomNumber)
             continue;
@@ -71,7 +53,7 @@ QStringList rbook::availRooms(uint &exludeRoomNumber) const
 
 void rbook::setCapacity(uint &cap)
 {
-    mRooms.reserve(cap);
+    mEntries.reserve(cap);
 }
 
 rbook *rbook::getRbook()
@@ -83,19 +65,22 @@ rbook *rbook::getRbook()
 
 void rbook::checkin(uint roomNumber, habitant *h)
 {
-    mRooms[roomNumber-1].checkin(*h);
-    emit dataChanged();
+    mEntries[roomNumber-1].checkin(*h);
+    saveToFile(config::fileRooms);
+    //emit dataChanged();
 }
 
 void rbook::checkout(uint roomNumber, uint sid)
 {
-    if (mRooms[roomNumber-1].checkout(sid))
-        emit dataChanged();
+    //if (mEntries[roomNumber-1].checkout(sid))
+    //emit dataChanged();
+    mEntries[roomNumber-1].checkout(sid);
+    saveToFile(config::fileRooms);
 }
 
 const habitant *rbook::getHabitantBySid(uint &sid) const
 {
-    for(const auto &it : qAsConst(mRooms))
+    for(const auto &it : qAsConst(mEntries))
     {
         for (uint i = 0; i < it.size(); i++)
             if (it[i].studentID() == sid)
@@ -103,51 +88,3 @@ const habitant *rbook::getHabitantBySid(uint &sid) const
     }
     return nullptr;
 }
-
-void rbook::save(QDataStream &ost) const
-{
-    ost << mRooms.size();
-    for (const auto &r : mRooms)
-    {
-        ost << r;
-        if (ost.status() == QDataStream::WriteFailed)
-            throw std::runtime_error(tr("Write to the stream failed").toStdString());
-    }
-}
-
-void rbook::load(QDataStream &ist)
-{
-    mRooms.clear();
-    uint size;
-    ist >> size;
-    for(uint i=0; i < size; i++)
-    {
-        room r;
-        ist >> r;
-        if (ist.status() == QDataStream::ReadCorruptData)
-            throw std::runtime_error(tr("Corrupt data were read from the stream").toStdString());
-
-        mRooms.push_back(r);
-    }
-}
-
-void rbook::saveToFile(const QString &filename) const
-{
-    QFile rbookfile(filename);
-    rbookfile.open(QIODevice::WriteOnly);
-    QDataStream ost(&rbookfile);
-    save(ost);
-    rbookfile.close();
-}
-
-void rbook::loadFromFile(const QString &filename)
-{
-    QFile rbookfile(filename);
-    if (!rbookfile.open(QIODevice::ReadOnly))
-        throw std::runtime_error((tr("open(): ") + rbookfile.errorString()).toStdString());
-
-    QDataStream ist(&rbookfile);
-    load(ist);
-    rbookfile.close();
-}
-
