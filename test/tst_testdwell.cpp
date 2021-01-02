@@ -28,7 +28,7 @@ private slots:
     void insertUsers();
     void removeUsers();
 
-//    //room class tests
+    //room class tests
     void setRoomCapacity();
     void roomCheckin();
     void roomWiping();
@@ -149,11 +149,11 @@ void testDWell::removeUsers()
     usersbook.insert(u4);
     QVERIFY(usersbook.size()==4);
 
-    usersbook.erase(0); // 0 - element index
+    usersbook.remove(0); // 0 - element index
     QVERIFY(usersbook.size()==3);
-    usersbook.erase(0);
-    usersbook.erase(0);
-    usersbook.erase(0);
+    usersbook.remove(0);
+    usersbook.remove(0);
+    usersbook.remove(0);
     QVERIFY(usersbook.size()==0);
 }
 
