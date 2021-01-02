@@ -1,5 +1,6 @@
 #include <QtTest>
 #include <QDateTime>
+#include <QTemporaryFile>
 
 #include "../dWell/user.h"
 #include "../dWell/ubook.h"
@@ -67,13 +68,13 @@ void testDWell::writeAndReadUserFromFile()
     QString n = "admin";
     QString p = "P@ssw0rd";
     user::utype t = user::ADMIN;
-    QFile f("file");
-    f.open(QIODevice::WriteOnly);
+    QTemporaryFile f("file");
+    f.open();
     QDataStream wstr(&f);
     user wu(n, p, t);
     wstr << wu;
     f.close();
-    f.open(QIODevice::ReadOnly);
+    f.open();
     QDataStream rstr(&f);
     user ru;
     rstr >> ru;
