@@ -7,6 +7,7 @@
 
 #include "usereditdialog.h"
 #include "ui_usereditdialog.h"
+#include "ubook.h"
 
 #include <QMessageBox>
 
