@@ -36,6 +36,22 @@ void book<entry>::loadFromFile(const QString &filename)
     bookfile.close();
 }
 
+/**
+ * Возвращает ссылку на элемент с индексом @a idx. Слово @c const после
+ * списка параметров означает, что это константная версия метода,
+ * она не может изменять данные класса. Результат также имеет квалификатор
+ * @c const, т. е. по этой ссылке элемент нельзя изменить.
+ *
+ * Можно было бы определить метод, позволяющий изменить заметку. Его объявление
+ * выглядело бы так:
+ * @code
+ * Note &operator[](uint idx);
+ * @endcode
+ * В данном случае делать этого нельзя, поскольку возвращённая ссылка на элемент
+ * неподконтрольна данному классу и он не имеет возможности узнать,
+ * было ли изменение и когда это произошло, а значит не может
+ * уведомить присоединённые виды о том, что данные изменились.
+ */
 template <typename entry>
 const entry &book<entry>::operator[](uint idx) const
 {
@@ -48,6 +64,9 @@ uint book<entry>::size() const
     return mEntries.size();
 }
 
+/**
+ * @brief Переопределение наследуемого метода writeReadableItem::write
+ */
 template <typename entry>
 void book<entry>::write(QDataStream &ost) const
 {
@@ -60,6 +79,9 @@ void book<entry>::write(QDataStream &ost) const
     }
 }
 
+/**
+ * @brief Переопределение наследуемого метода writeReadableItem::read
+ */
 template <typename entry>
 void book<entry>::read(QDataStream &ist)
 {
@@ -77,5 +99,10 @@ void book<entry>::read(QDataStream &ist)
     }
 }
 
+/**
+ * @brief Так как класс шаблонный, то, по требованиям c++,
+ * необходимо его реализовать либо в заголовочном файле, либо
+ * явно указать, какие типы возможны.
+ */
 template class book<user>;
 template class book<room>;
