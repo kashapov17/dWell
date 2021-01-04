@@ -7,6 +7,7 @@
 
 #include "relocationdialog.h"
 #include "ui_relocationdialog.h"
+#include "habitant.h"
 
 relocationDialog::relocationDialog(QWidget *parent, QStringList availRooms) :
     QDialog(parent),
