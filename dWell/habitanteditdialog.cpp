@@ -7,6 +7,7 @@
 
 #include "habitanteditdialog.h"
 #include "ui_habitanteditdialog.h"
+#include "habitant.h"
 
 #include <QMessageBox>
 #include <QIntValidator>
