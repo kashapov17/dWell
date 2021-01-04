@@ -1,3 +1,10 @@
+/**
+ * @file doc.cpp
+ * @brief Файл реализации класса doc.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "doc.h"
 #include "dormitory.h"
 
@@ -7,7 +14,8 @@
 void doc::generate(const habitant *h, QPrinter *printer)
 {
     dormitory *dorm = dormitory::getDormCfg();
-    const QString docTemplate = QString ("<p style=\"text-align: center;\"><strong>СПРАВКА </strong></p>"
+    const QString docTemplate = QString (
+                "<p style=\"text-align: center;\"><strong>СПРАВКА </strong></p>"
                 "<p style=\"text-align: center;\">&nbsp;</p>"
                 "<p style=\"text-align: center;\">&nbsp;</p>"
                 "<p style=\"text-align: justify; padding-left: 40px;\">Дана студенту %1 %2 года рождения в том, что"

@@ -1,3 +1,10 @@
+/**
+ * @file book.cpp
+ * @brief Файл реализации класса book.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "book.h"
 #include "config.h"
 #include "user.h"

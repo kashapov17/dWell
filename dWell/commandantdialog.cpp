@@ -1,3 +1,10 @@
+/**
+ * @file commandantdialog.cpp
+ * @brief Файл реализации класса commandantDialog.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "commandantdialog.h"
 #include "ui_commandantdialog.h"
 
@@ -54,10 +61,12 @@ void commandantDialog::updateTable()
 {
     ui->tableWidget->setRowCount(0);
     int row =0;
-    for (uint i=0; i < m_rbook->size(); i++)
+    auto roomCount = m_rbook->size();
+    for (uint i=0; i < roomCount; i++)
     {
         auto room = (*m_rbook)[i];
-        for (uint j=0; j < room.size(); j++)
+        auto roomSize = room.size();
+        for (uint j=0; j < roomSize; j++)
         {
             auto habitant = room[j];
 

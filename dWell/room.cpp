@@ -1,3 +1,10 @@
+/**
+ * @file room.cpp
+ * @brief Файл реализации класса room.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "room.h"
 #include "dormitory.h"
 #include "config.h"

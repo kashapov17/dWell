@@ -1,3 +1,10 @@
+/**
+ * @file relocationdialog.cpp
+ * @brief Файл реализации класса relocationdialog.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "relocationdialog.h"
 #include "ui_relocationdialog.h"
 

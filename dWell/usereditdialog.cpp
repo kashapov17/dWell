@@ -1,3 +1,10 @@
+/**
+ * @file usereditdialog.cpp
+ * @brief Файл реализации класса userEditDialog.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "usereditdialog.h"
 #include "ui_usereditdialog.h"
 

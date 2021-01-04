@@ -1,24 +1,35 @@
+/**
+ * @file ubook.cpp
+ * @brief Файл реализации класса ubook.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "ubook.h"
 #include "config.h"
 
 #include <QFile>
+#include <algorithm>
 
 user::utype ubook::findUser(const QString &name, const QString &passwd) const
 {
-    for (const auto &it : mEntries)
-        if (it.name() == name.trimmed() and it.passwd() == passwd.trimmed())
-            return it.type();
+    auto f = std::find_if(mEntries.begin(),
+                      mEntries.end(),
+         [&](const user &u) {return u.name() == name
+                && u.passwd() == passwd;});
 
+    if (f != mEntries.end()) return f->type();
     return user::utype::UNKNOWN;
 }
 
 user::utype ubook::findUserByName(const QString &name) const
 {
-     for (const auto &it : mEntries)
-         if(it.name() == name.trimmed())
-             return it.type();
+    auto f = std::find_if(mEntries.begin(),
+                      mEntries.end(),
+         [&](const user &u) {return u.name() == name;});
 
-     return user::utype::UNKNOWN;
+    if (f != mEntries.end()) return f->type();
+    return user::utype::UNKNOWN;
 }
 
 bool ubook::insert(user &user)

@@ -1,3 +1,10 @@
+/**
+ * @file habitant.cpp
+ * @brief Файл реализации класса habitant.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "habitant.h"
 
 const QString habitant::fname() const {return mFname;}

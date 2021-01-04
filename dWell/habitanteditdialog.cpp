@@ -1,3 +1,10 @@
+/**
+ * @file habitanteditdialog.cpp
+ * @brief Файл реализации класса habitantEditDialog.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "habitanteditdialog.h"
 #include "ui_habitanteditdialog.h"
 

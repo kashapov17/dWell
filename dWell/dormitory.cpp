@@ -1,3 +1,10 @@
+/**
+ * @file dormitory.cpp
+ * @brief Файл реализации класса dormitory.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "dormitory.h"
 #include "config.h"
 

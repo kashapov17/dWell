@@ -1,3 +1,10 @@
+/**
+ * @file tools.cpp
+ * @brief Файл реализации класса tools.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "tools.h"
 #include "config.h"
 

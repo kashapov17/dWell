@@ -1,3 +1,10 @@
+/**
+ * @file rbook.cpp
+ * @brief Файл реализации класса rbook.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "rbook.h"
 #include "config.h"
 

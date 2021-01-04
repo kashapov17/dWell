@@ -1,6 +1,14 @@
+/**
+ * @file admindialog.cpp
+ * @brief Файл реализации класса adminDialog.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "admindialog.h"
 #include "ui_admindialog.h"
 
+#include "ubook.h"
 #include "usereditdialog.h"
 #include "tools.h"
 #include "config.h"

@@ -1,3 +1,10 @@
+/**
+ * @file mainwindow.cpp
+ * @brief Файл реализации класса MainWindow.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 

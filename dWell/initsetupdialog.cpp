@@ -1,3 +1,10 @@
+/**
+ * @file initsetupdialog.cpp
+ * @brief Файл реализации класса initSetupDialog.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "initsetupdialog.h"
 #include "ui_initsetupdialog.h"
 

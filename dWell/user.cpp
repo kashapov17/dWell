@@ -1,3 +1,10 @@
+/**
+ * @file user.cpp
+ * @brief Файл реализации класса user.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #include "user.h"
 
 user::user(QString name, QString passwd, utype type) : mName(name), mPasswd(passwd), mType(type) {}
