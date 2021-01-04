@@ -1,3 +1,10 @@
+/**
+ * @file commandantdialog.h
+ * @brief Заголовчный файл класса commandantDialog.
+ * @author Кашапов Ярослав
+ * @date 2021
+ */
+
 #ifndef COMMANDANTDIALOG_H
 #define COMMANDANTDIALOG_H
 
