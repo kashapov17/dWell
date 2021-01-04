@@ -22,10 +22,16 @@ class MainWindow : public QMainWindow
     Q_OBJECT
 
 public:
+    /**
+     * @brief Конструктор с необязательным указанием родительского объекта.
+     * @param parent Указатель на родительский объект.
+     */
     MainWindow(QWidget *parent = nullptr);
+    /// Деструктор.
     ~MainWindow();
 
 private:
+    /// Указатель на сгенерированный интерфейс.
     Ui::MainWindow *ui;
 
 private slots:
