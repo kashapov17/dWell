@@ -1,5 +1,5 @@
 /**
- * @file habitanteditDialog.h
+ * @file habitanteditdialog.h
  * @brief Заголовчный файл класса habitantEditDialog.
  * @author Кашапов Ярослав
  * @date 2021
@@ -36,6 +36,7 @@ public:
     /**
      * @brief Конструктор с необязательным указанием родительского объекта.
      * @param parent Указатель на родительский объект.
+     * @param availRooms Доступный для заселения комнаты.
      */
     habitantEditDialog(QWidget *parent, QStringList availRooms);
     /// Деструктор.
