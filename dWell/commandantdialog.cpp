@@ -12,6 +12,8 @@
 #include "relocationdialog.h"
 #include "doc.h"
 #include "dormitory.h"
+#include "config.h"
+#include "rbook.h"
 
 #include <QMessageBox>
 #include <QPrinter>
