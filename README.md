@@ -10,7 +10,7 @@ git clone https://github.com/kashapovd/dWell
 Далее нужно открыть проект в Qt Creator и выполнить сборку средствами среды разработки.
 \
 \
-Иначе сделать это можно используя утилиту командной строки __qmake__:
+Иначе сделать это можно используя утилиту командной строки __make__:
 ```
 git clone https://github.com/kashapovd/dWell
 cd dWell
