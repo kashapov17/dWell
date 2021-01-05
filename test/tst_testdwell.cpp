@@ -79,7 +79,6 @@ void testDWell::writeAndReadUserFromFile()
     user ru;
     rstr >> ru;
     f.close();
-    f.remove();
     QVERIFY(ru.name() == n && ru.passwd() == p && ru.type() == t);
 }
 
@@ -263,7 +262,6 @@ void testDWell::roomWiping()
     QVERIFY(r.size()==0);
     QVERIFY(r.availableForCheckin());
 }
-
 
 QTEST_APPLESS_MAIN(testDWell)
 #include "tst_testdwell.moc"
