@@ -82,7 +82,6 @@ private:
     uint mRoomNumber;
 };
 
-
 inline QDataStream &operator<< (QDataStream &ost, const habitant &h)
 {
     ost << h.group() << h.roomNumber() << h.fname() << h.lname() << h.patronymic() << h.birthDate()

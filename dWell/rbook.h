@@ -55,7 +55,7 @@ public:
     /// заселение в общежитие.
     bool availableForCheckin() const;
     /// Генерирует файл данных контейнера.
-    void touchFile(uint &dormCap, uint &roomCap); // for initial setup
+    void touchFile(uint &dormCap, uint &roomCap);
 };
 
 #endif // RBOOK_H

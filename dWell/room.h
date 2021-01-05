@@ -70,12 +70,12 @@ private:
 
 protected:
     /**
-     * @brief Определение базового метода записи в поток
+     * @brief Определение базового метода записи комнаты в поток
      * @param ost Ссылка на поток.
      */
     void write(QDataStream &ost) const override;
     /**
-     * @brief Определение базового метода считывания из потока
+     * @brief Определение базового метода считывания комнаты из потока
      * @param ist Ссылка на поток.
      */
     void read(QDataStream &ist) override;
